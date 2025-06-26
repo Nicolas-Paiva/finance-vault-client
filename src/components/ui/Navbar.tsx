@@ -21,7 +21,7 @@ export default function Navbar() {
 
         <div className="hidden lg:w-[35%] md:flex md:justify-between">
             <Button variant="link" className="text-foreground"><Link href="/about">About Us</Link></Button>
-            <Button variant="link" className="text-foreground"><Link href="/contact">About Us</Link></Button>
+            <Button variant="link" className="text-foreground"><Link href="/contact">Contact</Link></Button>
         </div>
 
         <div className="flex justify-between sm:w-[45%] md:w-[30%] lg:w-[25%]">

@@ -4,7 +4,7 @@ import {features} from '@/lib/data/features';
 import FeatureCard from '@/components/ui/FeatureCard';
 import {ScrollArea} from '@/components/ui/scroll-area';
 import React from 'react';
-import FooterComponent from '@/components/ui/Footer';
+import Footer from '@/components/ui/Footer';
 
 export default function About() {
     const tags = Array.from({length: 50}).map(
@@ -46,7 +46,7 @@ export default function About() {
                     keeping an eye on spending, or just curious about your financial habits,
                     Finance Vault is your personal, secure vault for everything finance-related.</p>
             </section>
-            <FooterComponent/>
+            <Footer/>
         </>
     );
 };

@@ -1,6 +1,6 @@
 import {FaRegCopyright, FaGithub, FaLinkedin, FaGlobe} from 'react-icons/fa';
 
-export default function FooterComponent() {
+export default function Footer() {
     return (
         <footer className="h-[75px] w-[90vw] lg:max-w-7xl mt-16 mx-auto
          border-t border-accent flex justify-center">
