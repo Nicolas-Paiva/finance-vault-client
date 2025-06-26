@@ -1,5 +1,5 @@
 import type {Metadata} from 'next';
-import {Geist_Mono, Roboto} from 'next/font/google';
+import {Roboto} from 'next/font/google';
 import './globals.css';
 import {ThemeProvider} from '@/components/ThemeProvider';
 
@@ -7,12 +7,6 @@ const roboto = Roboto({
     variable: '--font-roboto',
     subsets: ['latin'],
     weight: ['400', '700'], // Optional: add other weights as needed
-});
-
-
-const geistMono = Geist_Mono({
-    variable: '--font-geist-mono',
-    subsets: ['latin'],
 });
 
 export const metadata: Metadata = {
