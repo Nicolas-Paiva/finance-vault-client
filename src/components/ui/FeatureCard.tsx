@@ -3,6 +3,8 @@ import {Feature} from '@/lib/data/features';
 import {RiMoneyEuroCircleLine} from 'react-icons/ri';
 import {MdOutlineSecurity} from 'react-icons/md';
 import {GrTransaction} from 'react-icons/gr';
+import { FaRegChartBar } from "react-icons/fa";
+import { IoIosNotificationsOutline } from "react-icons/io";
 
 export default function FeatureCard({title, description, icon}: Feature) {
     return (
@@ -18,6 +20,12 @@ export default function FeatureCard({title, description, icon}: Feature) {
                     }
                     {
                         icon === 'transaction' ? <GrTransaction size={20} className="mt-2"/> : ''
+                    }
+                    {
+                        icon === 'chart' ? <FaRegChartBar size={20} className="mt-2"/> : ''
+                    }
+                    {
+                        icon === 'notification' ? <IoIosNotificationsOutline size={20} className="mt-2"/> : ''
                     }
                 </div>
             </CardHeader>
