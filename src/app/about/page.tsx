@@ -4,18 +4,12 @@ import {features} from '@/lib/data/features';
 import FeatureCard from '@/components/ui/FeatureCard';
 import {ScrollArea} from '@/components/ui/scroll-area';
 import React from 'react';
-import Footer from '@/components/ui/Footer';
 
 export default function About() {
-    const tags = Array.from({length: 50}).map(
-        (_, i, a) => `v1.2.0-beta.${a.length - i}`
-    );
-
     return (
         <>
             <Navbar/>
             <section className="w-[90vw] lg:max-w-7xl mx-auto">
-                <h1 className="text-center text-xl bold">About Us</h1>
                 <p className="text-center mx-auto mt-8 p-4
                  border-2 border-accent rounded">Finance Vault is a
                     modern personal finance management
