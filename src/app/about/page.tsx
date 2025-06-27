@@ -46,7 +46,6 @@ export default function About() {
                     keeping an eye on spending, or just curious about your financial habits,
                     Finance Vault is your personal, secure vault for everything finance-related.</p>
             </section>
-            <Footer/>
         </>
     );
 };

@@ -2,6 +2,7 @@ import type {Metadata} from 'next';
 import {Roboto} from 'next/font/google';
 import './globals.css';
 import {ThemeProvider} from '@/components/ThemeProvider';
+import Footer from '@/components/ui/Footer';
 
 const roboto = Roboto({
     variable: '--font-roboto',
@@ -22,11 +23,14 @@ export default function RootLayout({
     return (
         <html lang="en" suppressHydrationWarning>
         <body
-            className={`${roboto.variable} antialiased`}>
+            className={`${roboto.variable} min-h-screen flex flex-col antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system"
                        enableSystem
                        disableTransitionOnChange>
-            {children}
+            <main className="flex-1">
+                {children}
+            </main>
+            <Footer/>
         </ThemeProvider>
         </body>
         </html>
