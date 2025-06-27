@@ -2,7 +2,7 @@ import {FaRegCopyright, FaGithub, FaLinkedin, FaGlobe} from 'react-icons/fa';
 
 export default function Footer() {
     return (
-        <footer className="h-[75px] w-[90vw] lg:max-w-7xl mt-16 mx-auto
+        <footer className="h-[75px] mt-16
          border-t border-accent flex justify-center">
             <div className="flex-col">
                 <div className="flex items-center gap-x-2">

@@ -2,12 +2,12 @@
 
 import Image from 'next/image';
 import {Button} from '@/components/ui/button';
-import {ThemeToggle} from '@/components/ui/ThemeToggle';
+import {ThemeToggle} from '@/components/ui/theme-toggle';
 import Link from 'next/link';
 
 export default function Navbar() {
 
-    return <nav className="h-[75px] w-[90vw] lg:max-w-7xl mx-auto flex justify-between items-center">
+    return <nav className="h-[75px] flex justify-between items-center">
         <div>
             <Link href="/">
                 <Image src={'/images/navbar-img.png'}
@@ -25,8 +25,8 @@ export default function Navbar() {
 
         <div className="flex justify-around sm:w-[45%] md:w-[25%] lg:w-[25%]">
             <ThemeToggle/>
-            <Button className="mr-2 ml-2 hover:cursor-pointer">Sign up</Button>
-            <Button variant="secondary" className="hover:cursor-pointer">Log in</Button>
+            <Button className="mr-2 ml-2 hover:cursor-pointer"><Link href={"/signup"}>Sign up</Link></Button>
+            <Button variant="secondary" className="hover:cursor-pointer"><Link href={"/login"}>Log in</Link></Button>
         </div>
     </nav>;
 };

@@ -1,7 +1,7 @@
 import Image from 'next/image';
-import Navbar from '@/components/ui/Navbar';
+import Navbar from '@/components/ui/navbar';
 import {features} from '@/lib/data/features';
-import FeatureCard from '@/components/ui/FeatureCard';
+import FeatureCard from '@/components/ui/feature-card';
 import {ScrollArea} from '@/components/ui/scroll-area';
 import React from 'react';
 
@@ -9,7 +9,7 @@ export default function About() {
     return (
         <>
             <Navbar/>
-            <section className="w-[90vw] lg:max-w-7xl mx-auto">
+            <section>
                 <p className="text-center mx-auto mt-8 p-4
                  border-2 border-accent rounded">Finance Vault is a
                     modern personal finance management

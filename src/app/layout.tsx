@@ -2,7 +2,7 @@ import type {Metadata} from 'next';
 import {Roboto} from 'next/font/google';
 import './globals.css';
 import {ThemeProvider} from '@/components/ThemeProvider';
-import Footer from '@/components/ui/Footer';
+import Footer from '@/components/ui/footer';
 import {Toaster} from '@/components/ui/sonner';
 
 const roboto = Roboto({
@@ -28,7 +28,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system"
                        enableSystem
                        disableTransitionOnChange>
-            <main className="flex-1">
+            <main className="flex-1 w-[90vw] lg:max-w-7xl mx-auto">
                 {children}
             </main>
             <Toaster position="top-center"/>

@@ -1,25 +1,18 @@
 'use client';
 
-import Navbar from '@/components/ui/navbar';
-import {Input} from '@/components/ui/input';
+import {Card} from '@/components/ui/card';
 import {Label} from '@/components/ui/label';
-import {Textarea} from '@/components/ui/textarea';
-import {Button} from '@/components/ui/button';
+import {Input} from '@/components/ui/input';
 import {Switch} from '@/components/ui/switch';
+import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger} from '@/components/ui/dialog';
+import {ScrollArea} from '@/components/ui/scroll-area';
+import {Button} from '@/components/ui/button';
 import React, {useState} from 'react';
 import {checkEmail, checkNumber} from '@/lib/utils/utils';
 import {toast} from 'sonner';
-import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger
-} from '@/components/ui/dialog';
-import {ScrollArea} from '@/components/ui/scroll-area';
-import {Card} from '@/components/ui/card';
+import Navbar from '@/components/ui/navbar';
 
-export default function Contact() {
+export default function SignUp() {
 
     // Data input
     const [name, setName] = useState('');
@@ -82,11 +75,7 @@ export default function Contact() {
     return (
         <>
             <Navbar/>
-
-            <section className="mt-8">
-
-                <h1 className="text-2xl md:text-5xl text-center mb-8">Get in touch</h1>
-
+            <section>
                 <Card className="w-full lg:w-2/3 mx-auto p-4">
                     <div className="w-full md:w-[80%] md:mx-auto">
                         <div className="flex flex-col gap-y-4 md:flex-row md:justify-between">
@@ -156,11 +145,6 @@ export default function Contact() {
                             </p>
                         </div>
 
-                        <Textarea className="mt-6 h-[250px]"
-                                  value={message}
-                                  onChange={(e) => setMessage(e.target.value)}
-                                  placeholder="Type your message here"/>
-
                         <div className="flex items-center space-x-2 mt-2">
                             <Switch id="privacy-policy"
                                     checked={checked}
@@ -171,7 +155,9 @@ export default function Contact() {
                             <Dialog>
                                 <div className="flex">
                                     <DialogTrigger>
-                                        <Label htmlFor="privacy-policy" className="pb-1 underline">By selecting this, you agree to our privacy
+                                        <Label htmlFor="privacy-policy" className="pb-1 underline">By selecting this,
+                                            you agree
+                                            to our privacy
                                             policy
                                         </Label>
                                     </DialogTrigger>
