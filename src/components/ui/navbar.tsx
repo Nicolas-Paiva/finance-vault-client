@@ -5,7 +5,12 @@ import {Button} from '@/components/ui/button';
 import {ThemeToggle} from '@/components/ui/theme-toggle';
 import Link from 'next/link';
 
-export default function Navbar() {
+export type NavbarProps = {
+    showSignup?: boolean;
+    showLogin?: boolean;
+}
+
+export default function Navbar({showSignup = true, showLogin = true}: NavbarProps) {
 
     return <nav className="h-[75px] flex justify-between items-center">
         <div>
@@ -23,10 +28,13 @@ export default function Navbar() {
             <Button variant="link" className="text-foreground text-xl lg:ml-40"><Link href="/contact">Contact</Link></Button>
         </div>
 
-        <div className="flex justify-around sm:w-[45%] md:w-[25%] lg:w-[25%]">
+        <div className="flex justify-around sm:w-[45%] md:w-[15%] lg:w-[15%]">
             <ThemeToggle/>
-            <Button className="mr-2 ml-2 hover:cursor-pointer"><Link href={"/signup"}>Sign up</Link></Button>
-            <Button variant="secondary" className="hover:cursor-pointer"><Link href={"/login"}>Log in</Link></Button>
+            {showSignup &&
+                <Button className="mr-2 ml-2 hover:cursor-pointer"><Link href={"/signup"}>Sign up</Link></Button>}
+
+            {showLogin &&
+                <Button variant="secondary" className="hover:cursor-pointer"><Link href={"/login"}>Log in</Link></Button>}
         </div>
     </nav>;
 };
