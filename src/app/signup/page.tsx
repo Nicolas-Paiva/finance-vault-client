@@ -119,6 +119,8 @@ export default function SignUp() {
                             {emailError && <p className="ml-2 text-xs text-destructive">Invalid email</p>}
                         </div>
 
+                        <CurrencySelect className="w-full mt-6 mb-6"/>
+
 
                             <div className="flex items-start gap-3">
                                 <Checkbox id="terms-2" defaultChecked={false} onClick={toggleTermsError}/>
@@ -139,8 +141,6 @@ export default function SignUp() {
                                 <Checkbox id="terms"/>
                                 <Label htmlFor="terms">Receive newsletter by email</Label>
                             </div>
-
-                        <CurrencySelect className="w-full mt-6"/>
 
                         <Button className="w-full mt-6" onClick={() => checkSubmission()}>Submit</Button>
                     </div>
