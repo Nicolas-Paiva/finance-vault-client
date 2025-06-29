@@ -1,0 +1,1 @@
+export type Currencies = 'EUR' | 'CHF' | 'USD' | 'GBP' | 'JPY' | 'AUD' | 'CAD';

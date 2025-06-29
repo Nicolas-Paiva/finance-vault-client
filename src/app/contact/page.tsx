@@ -7,7 +7,7 @@ import {Textarea} from '@/components/ui/textarea';
 import {Button} from '@/components/ui/button';
 import {Switch} from '@/components/ui/switch';
 import React, {useState} from 'react';
-import {checkEmail, checkNumber} from '@/lib/utils/utils';
+import {isEmailValid, checkNumber} from '@/lib/utils/utils';
 import {toast} from 'sonner';
 import {
     Dialog,
@@ -50,7 +50,7 @@ export default function Contact() {
             isDataValid = false;
         }
 
-        if (!checkEmail(email)) {
+        if (!isEmailValid(email)) {
             setEmailError(true);
             isDataValid = false;
         }

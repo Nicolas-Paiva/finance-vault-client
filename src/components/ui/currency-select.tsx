@@ -10,9 +10,14 @@ import {
 import {cn} from '@/lib/utils/utils';
 import Image from 'next/image';
 
-export default function CurrencySelect({className}: { className: string }) {
+type CurrencySelectProps = {
+    className?: string,
+    onValueChange?: (value: string) => void
+}
+
+export default function CurrencySelect({className, onValueChange}: CurrencySelectProps) {
     return (
-        <Select>
+        <Select onValueChange={onValueChange}>
             <SelectTrigger className={cn('w-[280px]', className)}>
                 <SelectValue placeholder="Select your currency"/>
             </SelectTrigger>

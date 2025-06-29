@@ -5,11 +5,16 @@ import {Label} from '@/components/ui/label';
 import {Input} from '@/components/ui/input';
 import {Button} from '@/components/ui/button';
 import React, {useState} from 'react';
-import {checkEmail} from '@/lib/utils/utils';
+import {isEmailValid, isPasswordValid} from '@/lib/utils/utils';
 import {toast} from 'sonner';
 import Navbar from '@/components/ui/navbar';
 import {Checkbox} from '@/components/ui/checkbox';
 import CurrencySelect from '@/components/ui/currency-select';
+import customFetch from '@/lib/axios/customAxios';
+
+
+// TODO: Create bullets below password and mark them red when something is
+// not properly achieved
 
 export default function SignUp() {
 
@@ -17,13 +22,33 @@ export default function SignUp() {
     const [name, setName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [currency, setCurrency] = useState('');
     const [checked, setChecked] = useState(false);
 
     // Error messages
     const [nameError, setNameError] = useState(false);
     const [lastNameError, setLastNameError] = useState(false);
     const [emailError, setEmailError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
     const [notCheckedError, setNotCheckedError] = useState(false);
+
+    // Dynamic password check
+    const [tooShort, setTooShort] = useState(false);
+    const [noSpecialCharacter, setNoSpecialCharacter] = useState(false);
+    const [noUpperCaseLetter, setNoUpperCaseLetter] = useState(false);
+
+
+    function buildRequest(): void {
+        const request = {
+            email,
+            password,
+            name,
+            lastName,
+            currency
+        };
+        console.log(request);
+    }
 
     function toggleTermsError(): void {
         if (!checked) {
@@ -49,8 +74,13 @@ export default function SignUp() {
             isDataValid = false;
         }
 
-        if (!checkEmail(email)) {
+        if (!isEmailValid(email)) {
             setEmailError(true);
+            isDataValid = false;
+        }
+
+        if (!isPasswordValid(password)) {
+            setPasswordError(true);
             isDataValid = false;
         }
 
@@ -63,11 +93,12 @@ export default function SignUp() {
             return;
         }
 
-        toast.success('Message sent successfully!');
         setName('');
         setLastName('');
         setEmail('');
+        setPassword('')
         setChecked(false);
+        setNotCheckedError(false);
     }
 
 
@@ -119,30 +150,62 @@ export default function SignUp() {
                             {emailError && <p className="ml-2 text-xs text-destructive">Invalid email</p>}
                         </div>
 
-                        <CurrencySelect className="w-full mt-6 mb-6"/>
+                        <div className="my-4">
+                            <Label htmlFor="password" className="ml-2 mb-1">Password</Label>
+                            <Input type="password"
+                                   id="password"
+                                   value={password}
+                                   placeholder="Password"
+                                   onChange={(e) => {
+                                       setPassword(e.target.value);
+                                       if(isPasswordValid(e.target.value)) {
+                                           // setTooShort(false);
+                                           // setNoSpecialCharacter(false);
+                                           // setNoUpperCaseLetter(false);
+                                       }
+                                   }}
+                                   onClick={() => {
+                                       setPasswordError(false);
+                                       setTooShort(true);
+                                       setNoSpecialCharacter(true);
+                                       setNoUpperCaseLetter(true);
+                                   }}
+                            />
+                            <ul>
+                                <li className={`ml-6 list-disc text-xs ${tooShort ? 'text-destructive' : ''}`}>At least 8 characters</li>
+                                <li className={`ml-6 list-disc text-xs ${noSpecialCharacter ? 'text-destructive' : ''}`}>At least 1 special character</li>
+                                <li className={`ml-6 list-disc text-xs ${noUpperCaseLetter ? 'text-destructive' : ''}`}>At least 1 uppercase letter</li>
+                            </ul>
+                            {passwordError && <p className="ml-2 text-xs text-destructive">Password must be valid</p>}
+                        </div>
+
+                        <CurrencySelect className="w-full mt-6 mb-6" onValueChange={(value) => setCurrency(value)}/>
 
 
-                            <div className="flex items-start gap-3">
-                                <Checkbox id="terms-2" defaultChecked={false} onClick={toggleTermsError}/>
-                                <div className="grid gap-2">
-                                    <Label htmlFor="terms-2">Accept terms and conditions</Label>
-                                    <p className="text-muted-foreground text-sm">
-                                        By clicking this checkbox, you agree to the terms and conditions.
-                                    </p>
-                                </div>
-                            </div>
-                            {notCheckedError &&
-                                <p className="text-xs text-destructive mb-6">Please agree to our terms before providing your
-                                    credentials.
+                        <div className="flex items-start gap-3">
+                            <Checkbox id="terms-2" defaultChecked={false} checked={checked} onClick={toggleTermsError}/>
+                            <div className="grid gap-2">
+                                <Label htmlFor="terms-2">Accept terms and conditions</Label>
+                                <p className="text-muted-foreground text-sm">
+                                    By clicking this checkbox, you agree to the terms and conditions.
                                 </p>
-                            }
-
-                            <div className="flex items-center gap-3 mt-4">
-                                <Checkbox id="terms"/>
-                                <Label htmlFor="terms">Receive newsletter by email</Label>
                             </div>
+                        </div>
+                        {notCheckedError &&
+                            <p className="text-xs text-destructive mb-6">Please agree to our terms before providing your
+                                credentials.
+                            </p>
+                        }
 
-                        <Button className="w-full mt-6" onClick={() => checkSubmission()}>Submit</Button>
+                        <div className="flex items-center gap-3 mt-4">
+                            <Checkbox id="terms"/>
+                            <Label htmlFor="terms">Receive newsletter by email</Label>
+                        </div>
+
+                        <Button className="w-full mt-6" onClick={() => {
+                            checkSubmission();
+                            buildRequest();
+                        }}>Submit</Button>
                     </div>
                 </Card>
             </section>
