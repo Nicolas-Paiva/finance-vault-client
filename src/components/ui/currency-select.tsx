@@ -12,12 +12,14 @@ import Image from 'next/image';
 
 type CurrencySelectProps = {
     className?: string,
-    onValueChange?: (value: string) => void
+    id: string,
+    value: string,
+    onValueChange: (value: string) => void
 }
 
 export default function CurrencySelect({className, onValueChange}: CurrencySelectProps) {
     return (
-        <Select onValueChange={onValueChange}>
+        <Select onValueChange={onValueChange} defaultValue="EUR">
             <SelectTrigger className={cn('w-[280px]', className)}>
                 <SelectValue placeholder="Select your currency"/>
             </SelectTrigger>

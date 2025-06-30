@@ -14,9 +14,22 @@ export function isEmailValid(email: string): boolean {
 
 
 export function isPasswordValid(password: string): boolean {
-    const regex: RegExp = /^(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/
-    return regex.test(password);
+    return passwordContainsSpecialCharacter(password)
+        && passwordContainsUppercase(password);
 }
+
+export function passwordContainsSpecialCharacter(password: string): boolean {
+    // This regex checks for any non-alphanumeric character
+    const specialCharRegex = /[^a-zA-Z0-9]/;
+    return specialCharRegex.test(password);
+}
+
+export function passwordContainsUppercase(password: string): boolean {
+    const uppercaseRegex = /[A-Z]/;
+    return uppercaseRegex.test(password);
+}
+
+
 
 
 export function isNameValid(name: string): boolean {
@@ -26,13 +39,6 @@ export function isNameValid(name: string): boolean {
 
 export function isLastNameValid(lastName: string): boolean {
     return lastName.length !== 0;
-}
-
-export function checkNamesAndEmail(name: string, lastName: string,
-                                   password: string): boolean {
-    return isNameValid(name) &&
-        isLastNameValid(lastName) &&
-        isPasswordValid(password);
 }
 
 

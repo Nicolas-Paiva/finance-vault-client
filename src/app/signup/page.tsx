@@ -5,16 +5,23 @@ import {Label} from '@/components/ui/label';
 import {Input} from '@/components/ui/input';
 import {Button} from '@/components/ui/button';
 import React, {useState} from 'react';
-import {isEmailValid, isPasswordValid} from '@/lib/utils/utils';
+import {
+    isEmailValid,
+    isPasswordValid,
+    passwordContainsSpecialCharacter,
+    passwordContainsUppercase
+} from '@/lib/utils/utils';
 import {toast} from 'sonner';
 import Navbar from '@/components/ui/navbar';
 import {Checkbox} from '@/components/ui/checkbox';
 import CurrencySelect from '@/components/ui/currency-select';
-import customFetch from '@/lib/axios/customAxios';
+import {RegistrationError, RegistrationRequest} from '@/lib/types/auth';
+import {Currency} from '@/lib/types/currencies';
+import {register} from '@/lib/services/auth-service';
+import {useMutation} from '@tanstack/react-query';
+import Link from 'next/link';
+import {Loader2Icon} from 'lucide-react';
 
-
-// TODO: Create bullets below password and mark them red when something is
-// not properly achieved
 
 export default function SignUp() {
 
@@ -23,7 +30,7 @@ export default function SignUp() {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [currency, setCurrency] = useState('');
+    const [currency, setCurrency] = useState<Currency>('EUR');
     const [checked, setChecked] = useState(false);
 
     // Error messages
@@ -32,6 +39,7 @@ export default function SignUp() {
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
     const [notCheckedError, setNotCheckedError] = useState(false);
+    const [emailAlreadyExists, setEmailAlreadyExists] = useState(false);
 
     // Dynamic password check
     const [tooShort, setTooShort] = useState(false);
@@ -39,67 +47,71 @@ export default function SignUp() {
     const [noUpperCaseLetter, setNoUpperCaseLetter] = useState(false);
 
 
-    function buildRequest(): void {
-        const request = {
+    /**
+     * Checks form data. Returns true only if all
+     * data is valid
+     */
+    function validateForm(): boolean {
+        let isValid = true;
+
+        setNameError(name.trim() === '');
+        setLastNameError(lastName.trim() === '');
+        setEmailError(!isEmailValid(email));
+        setPasswordError(password.trim() === '');
+
+        if (!checked) {
+            setNotCheckedError(true);
+        }
+
+        if (
+            name.trim() === '' ||
+            lastName.trim() === '' ||
+            !isEmailValid(email) ||
+            !isPasswordValid(password) ||
+            !checked
+        ) {
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+
+    /**
+     * Builds the registration request with
+     * form data
+     */
+    function buildRequest(): RegistrationRequest {
+        return {
             email,
             password,
             name,
             lastName,
             currency
         };
-        console.log(request);
-    }
-
-    function toggleTermsError(): void {
-        if (!checked) {
-            setChecked(true);
-            setNotCheckedError(false);
-            return;
-        }
-
-        setChecked(false);
     }
 
 
-    function checkSubmission(): void {
-        let isDataValid = true;
+    const registerMutation = useMutation({
+        mutationFn: async (request: RegistrationRequest) => {
+            return await register(request);
+        },
 
-        if (name.length === 0) {
-            setNameError(true);
-            isDataValid = false;
+        onSuccess: () => {
+            toast.success('User registered successfully!');
+            setName('');
+            setLastName('');
+            setEmail('');
+            setPassword('');
+            setChecked(false);
+        },
+
+        onError: (error: RegistrationError) => {
+            toast.error('User already exists');
+            setEmailAlreadyExists(true);
+            console.log(error);
         }
-
-        if (lastName.length === 0) {
-            setLastNameError(true);
-            isDataValid = false;
-        }
-
-        if (!isEmailValid(email)) {
-            setEmailError(true);
-            isDataValid = false;
-        }
-
-        if (!isPasswordValid(password)) {
-            setPasswordError(true);
-            isDataValid = false;
-        }
-
-        if (!checked) {
-            setNotCheckedError(true);
-            isDataValid = false;
-        }
-
-        if (!isDataValid) {
-            return;
-        }
-
-        setName('');
-        setLastName('');
-        setEmail('');
-        setPassword('')
-        setChecked(false);
-        setNotCheckedError(false);
-    }
+    });
 
 
     return (
@@ -145,9 +157,15 @@ export default function SignUp() {
                                    value={email}
                                    placeholder="your@email.com"
                                    onChange={(e) => setEmail(e.target.value)}
-                                   onClick={() => setEmailError(false)}
+                                   onClick={() => {
+                                       setEmailError(false);
+                                       setEmailAlreadyExists(false)
+                                   }}
                             />
                             {emailError && <p className="ml-2 text-xs text-destructive">Invalid email</p>}
+                            {emailAlreadyExists &&
+                                <p className="ml-2 text-xs text-destructive">Email already in use. Please try another
+                                    one.</p>}
                         </div>
 
                         <div className="my-4">
@@ -158,32 +176,56 @@ export default function SignUp() {
                                    placeholder="Password"
                                    onChange={(e) => {
                                        setPassword(e.target.value);
-                                       if(isPasswordValid(e.target.value)) {
-                                           // setTooShort(false);
-                                           // setNoSpecialCharacter(false);
-                                           // setNoUpperCaseLetter(false);
+
+                                       if (e.target.value.length >= 8) {
+                                           setTooShort(false);
+                                       } else {
+                                           setTooShort(true);
+                                       }
+
+                                       if (passwordContainsSpecialCharacter(e.target.value)) {
+                                           setNoSpecialCharacter(false);
+                                       } else {
+                                           setNoSpecialCharacter(true);
+                                       }
+
+                                       if (passwordContainsUppercase(e.target.value)) {
+                                           setNoUpperCaseLetter(false);
+                                       } else {
+                                           setNoUpperCaseLetter(true);
                                        }
                                    }}
-                                   onClick={() => {
-                                       setPasswordError(false);
-                                       setTooShort(true);
-                                       setNoSpecialCharacter(true);
-                                       setNoUpperCaseLetter(true);
-                                   }}
+                                   onClick={() => setPasswordError(false)}
                             />
+                            {passwordError &&
+                                <p className="ml-2 text-xs text-destructive">Please provide a valid password</p>}
                             <ul>
-                                <li className={`ml-6 list-disc text-xs ${tooShort ? 'text-destructive' : ''}`}>At least 8 characters</li>
-                                <li className={`ml-6 list-disc text-xs ${noSpecialCharacter ? 'text-destructive' : ''}`}>At least 1 special character</li>
-                                <li className={`ml-6 list-disc text-xs ${noUpperCaseLetter ? 'text-destructive' : ''}`}>At least 1 uppercase letter</li>
+                                <li className={`ml-6 list-disc text-xs ${tooShort ? 'text-destructive' : 'text-muted-foreground'}`}>At
+                                    least 8 characters
+                                </li>
+                                <li className={`ml-6 list-disc text-xs  ${noSpecialCharacter ? 'text-destructive' : 'text-muted-foreground'}`}>At
+                                    least 1 special character
+                                </li>
+                                <li className={`ml-6 list-disc text-xs  ${noUpperCaseLetter ? 'text-destructive' : 'text-muted-foreground'}`}>At
+                                    least 1 uppercase letter
+                                </li>
                             </ul>
-                            {passwordError && <p className="ml-2 text-xs text-destructive">Password must be valid</p>}
                         </div>
 
-                        <CurrencySelect className="w-full mt-6 mb-6" onValueChange={(value) => setCurrency(value)}/>
+                        <Label htmlFor="currency" className="ml-2 mb-1">Currency</Label>
+                        <CurrencySelect id="currency" className="w-full mb-6" value={currency}
+                                        onValueChange={(value) => setCurrency(value)}/>
 
 
                         <div className="flex items-start gap-3">
-                            <Checkbox id="terms-2" defaultChecked={false} checked={checked} onClick={toggleTermsError}/>
+                            <Checkbox id="terms-2" checked={checked} onClick={() => {
+                                setChecked(!checked);
+
+                                if (notCheckedError) {
+                                    setNotCheckedError(false);
+                                }
+
+                            }}/>
                             <div className="grid gap-2">
                                 <Label htmlFor="terms-2">Accept terms and conditions</Label>
                                 <p className="text-muted-foreground text-sm">
@@ -202,10 +244,19 @@ export default function SignUp() {
                             <Label htmlFor="terms">Receive newsletter by email</Label>
                         </div>
 
-                        <Button className="w-full mt-6" onClick={() => {
-                            checkSubmission();
-                            buildRequest();
-                        }}>Submit</Button>
+                        {registerMutation.isPending ?
+                            <Button disabled className="w-full mt-6">
+                                <Loader2Icon className="animate-spin" />Please wait
+                            </Button> :
+                            <Button className="w-full mt-6" onClick={() => {
+                                if (!validateForm()) return;
+                                const request = buildRequest();
+                                registerMutation.mutate(request);
+                            }}>Submit</Button>
+                        }
+
+                        <p className="text-xs md:text-sm mt-2">Already have an account? <Link
+                            className="underline text-violet-400" href="/login">Log in here</Link></p>
                     </div>
                 </Card>
             </section>
