@@ -9,12 +9,13 @@ import {
 
 import {cn} from '@/lib/utils/utils';
 import Image from 'next/image';
+import {Currency} from '@/lib/types/currencies';
 
 type CurrencySelectProps = {
     className?: string,
     id: string,
     value: string,
-    onValueChange: (value: string) => void
+    onValueChange: (value: Currency) => void
 }
 
 export default function CurrencySelect({className, onValueChange}: CurrencySelectProps) {

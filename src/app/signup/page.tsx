@@ -15,7 +15,7 @@ import {toast} from 'sonner';
 import Navbar from '@/components/ui/navbar';
 import {Checkbox} from '@/components/ui/checkbox';
 import CurrencySelect from '@/components/ui/currency-select';
-import {RegistrationError, RegistrationRequest} from '@/lib/types/auth';
+import {RegistrationErrorUserAlreadyExists, RegistrationRequest, RegistrationSuccessResponse} from '@/lib/types/auth';
 import {Currency} from '@/lib/types/currencies';
 import {register} from '@/lib/services/auth-service';
 import {useMutation} from '@tanstack/react-query';
@@ -97,8 +97,9 @@ export default function SignUp() {
             return await register(request);
         },
 
-        onSuccess: () => {
+        onSuccess: (data: RegistrationSuccessResponse) => {
             toast.success('User registered successfully!');
+            localStorage.setItem('token', data.jwtToken);
             setName('');
             setLastName('');
             setEmail('');
@@ -106,10 +107,16 @@ export default function SignUp() {
             setChecked(false);
         },
 
-        onError: (error: RegistrationError) => {
-            toast.error('User already exists');
-            setEmailAlreadyExists(true);
-            console.log(error);
+        onError: (error: any) => {
+
+            if (error.message === 'Email already exists') {
+                toast.error(error.message);
+                setEmailAlreadyExists(true);
+            } else {
+                toast.error('Something went wrong');
+                setEmailAlreadyExists(false);
+            }
+
         }
     });
 
@@ -150,69 +157,67 @@ export default function SignUp() {
                             </div>
                         </div>
 
-                        <div className="my-4">
-                            <Label htmlFor="email" className="ml-2 mb-1">Email</Label>
-                            <Input type="email"
-                                   id="email"
-                                   value={email}
-                                   placeholder="your@email.com"
-                                   onChange={(e) => setEmail(e.target.value)}
-                                   onClick={() => {
-                                       setEmailError(false);
-                                       setEmailAlreadyExists(false)
-                                   }}
-                            />
-                            {emailError && <p className="ml-2 text-xs text-destructive">Invalid email</p>}
-                            {emailAlreadyExists &&
-                                <p className="ml-2 text-xs text-destructive">Email already in use. Please try another
-                                    one.</p>}
-                        </div>
+                        <Label htmlFor="email" className="ml-2 mb-1 mt-4">Email</Label>
+                        <Input type="email"
+                               id="email"
+                               value={email}
+                               placeholder="your@email.com"
+                               onChange={(e) => setEmail(e.target.value)}
+                               onClick={() => {
+                                   setEmailError(false);
+                                   setEmailAlreadyExists(false);
+                               }}
+                        />
+                        {emailError && <p className="ml-2 text-xs text-destructive">Invalid email</p>}
+                        {emailAlreadyExists &&
+                            <p className="ml-2 text-xs text-destructive">Email already in use. Please try another
+                                one.</p>}
 
-                        <div className="my-4">
-                            <Label htmlFor="password" className="ml-2 mb-1">Password</Label>
-                            <Input type="password"
-                                   id="password"
-                                   value={password}
-                                   placeholder="Password"
-                                   onChange={(e) => {
-                                       setPassword(e.target.value);
 
-                                       if (e.target.value.length >= 8) {
-                                           setTooShort(false);
-                                       } else {
-                                           setTooShort(true);
-                                       }
+                        <Label htmlFor="password" className="ml-2 mb-1 mt-4">Password</Label>
+                        <Input type="password"
+                               id="password"
+                               value={password}
+                               placeholder="Password"
+                               onChange={(e) => {
+                                   setPassword(e.target.value);
 
-                                       if (passwordContainsSpecialCharacter(e.target.value)) {
-                                           setNoSpecialCharacter(false);
-                                       } else {
-                                           setNoSpecialCharacter(true);
-                                       }
+                                   if (e.target.value.length >= 8) {
+                                       setTooShort(false);
+                                   } else {
+                                       setTooShort(true);
+                                   }
 
-                                       if (passwordContainsUppercase(e.target.value)) {
-                                           setNoUpperCaseLetter(false);
-                                       } else {
-                                           setNoUpperCaseLetter(true);
-                                       }
-                                   }}
-                                   onClick={() => setPasswordError(false)}
-                            />
-                            {passwordError &&
-                                <p className="ml-2 text-xs text-destructive">Please provide a valid password</p>}
-                            <ul>
-                                <li className={`ml-6 list-disc text-xs ${tooShort ? 'text-destructive' : 'text-muted-foreground'}`}>At
-                                    least 8 characters
-                                </li>
-                                <li className={`ml-6 list-disc text-xs  ${noSpecialCharacter ? 'text-destructive' : 'text-muted-foreground'}`}>At
-                                    least 1 special character
-                                </li>
-                                <li className={`ml-6 list-disc text-xs  ${noUpperCaseLetter ? 'text-destructive' : 'text-muted-foreground'}`}>At
-                                    least 1 uppercase letter
-                                </li>
-                            </ul>
-                        </div>
+                                   if (passwordContainsSpecialCharacter(e.target.value)) {
+                                       setNoSpecialCharacter(false);
+                                   } else {
+                                       setNoSpecialCharacter(true);
+                                   }
 
-                        <Label htmlFor="currency" className="ml-2 mb-1">Currency</Label>
+                                   if (passwordContainsUppercase(e.target.value)) {
+                                       setNoUpperCaseLetter(false);
+                                   } else {
+                                       setNoUpperCaseLetter(true);
+                                   }
+                               }}
+                               onClick={() => setPasswordError(false)}
+                        />
+                        {passwordError &&
+                            <p className="ml-2 text-xs text-destructive">Please provide a valid password</p>}
+                        <ul>
+                            <li className={`ml-6 list-disc text-xs ${tooShort ? 'text-destructive' : 'text-muted-foreground'}`}>At
+                                least 8 characters
+                            </li>
+                            <li className={`ml-6 list-disc text-xs  ${noSpecialCharacter ? 'text-destructive' : 'text-muted-foreground'}`}>At
+                                least 1 special character
+                            </li>
+                            <li className={`ml-6 list-disc text-xs  ${noUpperCaseLetter ? 'text-destructive' : 'text-muted-foreground'}`}>At
+                                least 1 uppercase letter
+                            </li>
+                        </ul>
+
+
+                        <Label htmlFor="currency" className="ml-2 mb-1 mt-4">Currency</Label>
                         <CurrencySelect id="currency" className="w-full mb-6" value={currency}
                                         onValueChange={(value) => setCurrency(value)}/>
 
@@ -246,13 +251,17 @@ export default function SignUp() {
 
                         {registerMutation.isPending ?
                             <Button disabled className="w-full mt-6">
-                                <Loader2Icon className="animate-spin" />Please wait
+                                <Loader2Icon className="animate-spin"/>Please wait
                             </Button> :
-                            <Button className="w-full mt-6" onClick={() => {
-                                if (!validateForm()) return;
-                                const request = buildRequest();
-                                registerMutation.mutate(request);
-                            }}>Submit</Button>
+                            <Button className="w-full mt-6"
+                                    onClick={() => {
+                                        if (!validateForm()) return;
+                                        const request = buildRequest();
+                                        registerMutation.mutate(request);
+                                    }
+                                    }>
+                                Submit
+                            </Button>
                         }
 
                         <p className="text-xs md:text-sm mt-2">Already have an account? <Link
