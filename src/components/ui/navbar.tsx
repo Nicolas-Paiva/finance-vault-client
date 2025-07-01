@@ -28,7 +28,7 @@ export default function Navbar({showSignup = true, showLogin = true}: NavbarProp
             <Button variant="link" className="text-foreground text-xl lg:ml-40"><Link href="/contact">Contact</Link></Button>
         </div>
 
-        <div className="flex justify-around sm:w-[45%] md:w-[15%] lg:w-[15%]">
+        <div className="flex justify-around sm:w-[45%] md:w-[25%] lg:w-[15%]">
             <ThemeToggle/>
             {showSignup &&
                 <Button className="mr-2 ml-2 hover:cursor-pointer"><Link href={"/signup"}>Sign up</Link></Button>}

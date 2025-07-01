@@ -6,12 +6,13 @@ import {Input} from '@/components/ui/input';
 import React, {useState} from 'react';
 import {toast} from 'sonner';
 import Navbar from '@/components/ui/navbar';
-import {LoginRequest, LoginResponse, LoginSuccessResponse} from '@/lib/types/auth';
+import {LoginRequest, LoginSuccessResponse} from '@/lib/types/auth';
 import {login} from '@/lib/services/auth-service';
 import {useMutation} from '@tanstack/react-query';
 import Link from 'next/link';
 import {Button} from '@/components/ui/button';
 import {Loader2Icon} from 'lucide-react';
+import {useRouter} from 'next/navigation';
 
 
 export default function SignUp() {
@@ -22,6 +23,8 @@ export default function SignUp() {
 
     // Error messages
     const [badCredentials, setBadCredentials] = useState(false);
+
+    const router = useRouter();
 
 
     /**
@@ -46,9 +49,11 @@ export default function SignUp() {
             localStorage.setItem('token', data.jwtToken);
             setEmail('');
             setPassword('');
+            router.push('/home');
+
         },
 
-        onError: (error: any) => {
+        onError: () => {
             toast.error('Invalid username or password');
             setBadCredentials(true);
         }

@@ -15,12 +15,13 @@ import {toast} from 'sonner';
 import Navbar from '@/components/ui/navbar';
 import {Checkbox} from '@/components/ui/checkbox';
 import CurrencySelect from '@/components/ui/currency-select';
-import {RegistrationErrorUserAlreadyExists, RegistrationRequest, RegistrationSuccessResponse} from '@/lib/types/auth';
+import {RegistrationRequest, RegistrationSuccessResponse} from '@/lib/types/auth';
 import {Currency} from '@/lib/types/currencies';
 import {register} from '@/lib/services/auth-service';
 import {useMutation} from '@tanstack/react-query';
 import Link from 'next/link';
 import {Loader2Icon} from 'lucide-react';
+import {useRouter} from 'next/navigation';
 
 
 export default function SignUp() {
@@ -46,6 +47,7 @@ export default function SignUp() {
     const [noSpecialCharacter, setNoSpecialCharacter] = useState(false);
     const [noUpperCaseLetter, setNoUpperCaseLetter] = useState(false);
 
+    const router = useRouter();
 
     /**
      * Checks form data. Returns true only if all
@@ -105,9 +107,10 @@ export default function SignUp() {
             setEmail('');
             setPassword('');
             setChecked(false);
+            router.push('/home');
         },
 
-        onError: (error: any) => {
+        onError: (error) => {
 
             if (error.message === 'Email already exists') {
                 toast.error(error.message);
