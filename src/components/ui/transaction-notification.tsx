@@ -1,15 +1,26 @@
-import {DropdownMenuSeparator} from '@/components/ui/dropdown-menu';
+import {DropdownMenuItem, DropdownMenuSeparator} from '@/components/ui/dropdown-menu';
+import {GrTransaction} from 'react-icons/gr';
+import {Notification} from '@/lib/services/notification-service';
+import {useQuery} from '@tanstack/react-query';
+import {getSummary} from '@/lib/services/summary-service';
+import {formatCurrency} from '@/lib/utils/utils';
 
-export type TransactionNotificationProps = {
-    sender: string,
-    amount: number
-}
+export default function TransactionNotification({message, amount, createdAt, seen}: Notification) {
+    const {data} = useQuery({
+        queryKey: ['summary'],
+        queryFn: getSummary
+    })
 
-export default function TransactionNotification({sender, amount}: TransactionNotificationProps) {
+    const currency = data?.currency ?? '€';
+
     return (
         <>
-            <h3>Transaction of {amount} received from {sender}</h3>
-            <DropdownMenuSeparator/>
+            <DropdownMenuItem className={`${!seen && 'bg-muted'} mb-2`}> <GrTransaction className="text-green-500"/>
+                <div className="flex-col">
+                    <p>{message}</p>
+                    <p>{formatCurrency(amount, currency)}</p>
+                </div>
+            </DropdownMenuItem>
         </>
     );
 };
