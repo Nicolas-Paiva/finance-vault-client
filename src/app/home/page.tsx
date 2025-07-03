@@ -5,10 +5,8 @@ import {useSummary} from '@/lib/hooks/useSummary';
 import {formatCurrency} from '@/lib/utils/utils';
 import {Skeleton} from '@/components/ui/skeleton';
 import React from 'react';
-import {FaArrowUp} from 'react-icons/fa';
-import {BiMoneyWithdraw} from 'react-icons/bi';
-import {GrTransaction} from 'react-icons/gr';
 import HomeActionBar from '@/components/ui/home-action-bar';
+import TransactionContainer from '@/components/ui/transaction-container';
 
 export default function Home() {
     const {data, isPending, isError} = useSummary();
@@ -35,11 +33,12 @@ export default function Home() {
                 <div className="flex justify-between items-center">
                     <div>
                         <CardTitle>Total balance</CardTitle>
-                        <p className="text-3xl mt-2 bold">{formatCurrency(data?.balance || 0, data?.currency || 'EUR')}</p>
+                        <p className="text-3xl mt-2 font-bold">{formatCurrency(data?.balance || 0, data?.currency || 'EUR')}</p>
                     </div>
                 </div>
             </Card>
             <HomeActionBar/>
+            <TransactionContainer/>
         </>
     );
 };
