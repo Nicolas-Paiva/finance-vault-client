@@ -44,3 +44,10 @@ export function formatCurrency(amount: number, currency: string): string {
         currency
     }).format(amount);
 }
+
+export const formatter = new Intl.DateTimeFormat('pt-PT', {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour12: false, // use 24-hour time if you want
+});
