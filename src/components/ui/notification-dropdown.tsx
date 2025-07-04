@@ -10,7 +10,6 @@ import TransactionNotification from '@/components/ui/transaction-notification';
 import {ScrollArea} from '@/components/ui/scroll-area';
 import {useQuery} from '@tanstack/react-query';
 import {getNotifications} from '@/lib/services/notification-service';
-import {Skeleton} from '@/components/ui/skeleton';
 import React from 'react';
 
 type NotificationDropdownProps = {

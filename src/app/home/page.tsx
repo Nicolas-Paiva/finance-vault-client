@@ -38,7 +38,7 @@ export default function Home() {
                 </div>
             </Card>
             <HomeActionBar/>
-            <TransactionContainer/>
+            {data?.currency && <TransactionContainer currency={data.currency} />}
         </>
     );
 };
