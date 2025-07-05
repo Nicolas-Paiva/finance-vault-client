@@ -1,6 +1,7 @@
 import Navbar from '@/components/ui/navbar';
 import {Button} from '@/components/ui/button';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Home() {
     return (
@@ -20,8 +21,8 @@ export default function Home() {
                         </Image>
                     </div>
                     <div className="flex flex-row justify-between mt-6 w-[80%] md:w-60">
-                        <Button className="md:mr-4">Get Started</Button>
-                        <Button variant="outline">Learn More</Button>
+                       <Link href="/signup"><Button className="hover:cursor-pointer">Get Started</Button></Link>
+                       <Link href="/about"><Button variant="outline" className="hover:cursor-pointer">Learn More</Button></Link>
                     </div>
                 </div>
             </div>
