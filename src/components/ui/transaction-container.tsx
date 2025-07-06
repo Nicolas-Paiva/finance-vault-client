@@ -1,7 +1,6 @@
 import {Card, CardTitle} from '@/components/ui/card';
 import {ScrollArea} from '@/components/ui/scroll-area';
 import Transaction from '@/components/ui/transaction';
-import {IoMdOptions} from 'react-icons/io';
 import {FaSortAmountDown} from 'react-icons/fa';
 import {useInfiniteQuery} from '@tanstack/react-query';
 import {getTransactions} from '@/lib/services/transaction-service';
@@ -9,6 +8,7 @@ import {PaginatedResponse} from '@/lib/types/pagination';
 import {TransactionView} from '@/lib/types/transaction-types';
 import {Skeleton} from '@/components/ui/skeleton';
 import {Button} from '@/components/ui/button';
+import FilteringModal from '@/components/ui/filtering-modal';
 
 type TransactionContainerProps = {
     currency: string
@@ -50,7 +50,7 @@ export default function TransactionContainer({currency}: TransactionContainerPro
         <div className="flex items-center justify-between w-[90%] mx-auto">
             <p className="font-bold">Transactions</p>
             <div className="flex gap-x-4 mr-2">
-                <IoMdOptions onClick={() => console.log('Options')}/>
+                <FilteringModal/>
                 <FaSortAmountDown onClick={() => console.log('Filter')}/>
             </div>
         </div>

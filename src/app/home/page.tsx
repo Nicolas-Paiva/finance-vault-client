@@ -9,6 +9,12 @@ import HomeActionBar from '@/components/ui/home-action-bar';
 import TransactionContainer from '@/components/ui/transaction-container';
 import {ThemeToggle} from '@/components/ui/theme-toggle';
 
+/**
+ * Represents the home page, displaying relevant user data.
+ * Also receives information about the currency, which is
+ * passed down to other components as props
+ * @constructor
+ */
 export default function Home() {
     const {data, isPending, isError} = useSummary();
 
