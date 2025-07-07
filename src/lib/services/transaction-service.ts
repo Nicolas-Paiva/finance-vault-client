@@ -4,37 +4,28 @@ import {TransactionView} from '@/lib/types/transaction-types';
 
 
 /**
- * Gets all the user's transactions
+ * Creates the query string based on the filters
+ * selected by the user and sends the request to the API
  */
-export async function getTransactions(page: number = 0)  {
-    const response = await
-        customFetch<PaginatedResponse<TransactionView>>(`/transactions?page=${page}`)
-    return response.data;
-}
-
-export async function getFilteredTransactions(page: number = 0,
+export async function getTransactions(page: number = 0,
                                               minAmount: string = '',
                                               maxAmount: string = '',
                                               deposits: boolean = false,
                                               withdrawals: boolean = false) {
-    console.log(minAmount);
-    console.log(maxAmount);
-    console.log(deposits);
-    console.log(withdrawals);
 
     let queryString = `/transactions?page=${page}`;
 
-    if (deposits) {
-        queryString = queryString.concat(`&type=deposit`);
+    // If both are true, none is included in the query string
+    if (deposits && !withdrawals) {
+        queryString += `&type=deposit`;
+    } else if (!deposits && withdrawals) {
+        queryString += `&type=withdrawal`;
     }
 
-    if (withdrawals) {
-        queryString = queryString.concat(`&type=withdrawal`);
-    }
 
     queryString = queryString
-        .concat(`&minAmount=${minAmount}`)
-        .concat(`&maxAmount=${maxAmount}`)
+        .concat(`&minValue=${minAmount}`)
+        .concat(`&maxValue=${maxAmount}`)
 
     console.log(queryString);
     const response = await customFetch(queryString);

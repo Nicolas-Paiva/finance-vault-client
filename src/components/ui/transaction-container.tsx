@@ -9,12 +9,19 @@ import {TransactionView} from '@/lib/types/transaction-types';
 import {Skeleton} from '@/components/ui/skeleton';
 import {Button} from '@/components/ui/button';
 import FilteringModal from '@/components/ui/filtering-modal';
+import {useState} from 'react';
 
 type TransactionContainerProps = {
     currency: string
 }
 
 export default function TransactionContainer({currency}: TransactionContainerProps) {
+
+    // Filter criteria
+    const [minAmount, setMinAmount] = useState<number>(0);
+    const [maxAmount, setMaxAmount] = useState<number>(Number.MAX_SAFE_INTEGER);
+    const [showDeposits, setShowDeposits] = useState(true);
+    const [showWithdrawals, setShowWithdrawals] = useState(true);
 
     // Uses infinite query to load the pages
     const {
@@ -26,8 +33,13 @@ export default function TransactionContainer({currency}: TransactionContainerPro
         isLoading,
         isError,
     } = useInfiniteQuery<PaginatedResponse<TransactionView>, Error>({
-        queryKey: ['transactions'],
-        queryFn: ({pageParam = 0}) => getTransactions(pageParam),
+        queryKey: ['transactions', {minAmount, maxAmount, showDeposits, showWithdrawals}],
+        queryFn: ({pageParam = 0}) =>
+            getTransactions(pageParam,
+                String(minAmount),
+                String(maxAmount),
+                showDeposits,
+                showWithdrawals),
         getNextPageParam: (lastPage) => {
             return lastPage.last ? undefined : lastPage.pageNumber + 1;
         },
@@ -50,7 +62,12 @@ export default function TransactionContainer({currency}: TransactionContainerPro
         <div className="flex items-center justify-between w-[90%] mx-auto">
             <p className="font-bold">Transactions</p>
             <div className="flex gap-x-4 mr-2">
-                <FilteringModal/>
+                <FilteringModal
+                    onMinChange={setMinAmount}
+                    onMaxChange={setMaxAmount}
+                    onToggleDeposits={setShowDeposits}
+                    onToggleWithdrawals={setShowWithdrawals}
+                />
                 <FaSortAmountDown onClick={() => console.log('Filter')}/>
             </div>
         </div>

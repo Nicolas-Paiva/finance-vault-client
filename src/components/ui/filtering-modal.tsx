@@ -11,25 +11,40 @@ import React, {useState} from 'react';
 import {IoMdOptions} from 'react-icons/io';
 import {Input} from '@/components/ui/input';
 import {Checkbox} from '@/components/ui/checkbox';
-import {getFilteredTransactions} from '@/lib/services/transaction-service';
 import {Button} from '@/components/ui/button';
 
-export default function FilteringModal() {
-    const [deposits, setDeposits] = useState(true);
-    const [withdrawals, setWithdrawals] = useState(true);
-    const [minAmount, setMinAmount] = useState(0);
-    const [maxAmount, setMaxAmount] = useState(9999);
+type FilteringModalProps = {
+    onMinChange: (v: number) => void;
+    onMaxChange: (v: number) => void;
+    onToggleDeposits: (v: boolean) => void;
+    onToggleWithdrawals: (v: boolean) => void;
+};
 
-    function filterTransactions(): void {
-        getFilteredTransactions(0, String(minAmount), String(maxAmount), deposits, withdrawals)
+export default function FilteringModal({
+                                           onMinChange,
+                                           onMaxChange,
+                                           onToggleDeposits,
+                                           onToggleWithdrawals,
+                                       }: FilteringModalProps) {
+
+    // Local draft state
+    const [draftMin, setDraftMin] = useState(1);
+    const [draftMax, setDraftMax] = useState(10);
+    const [draftDep, setDraftDep] = useState(true);
+    const [draftWith, setDraftWith] = useState(true);
+
+    function setFilteringValues(): void {
+        onMinChange(draftMin);
+        onMaxChange(draftMax);
+        onToggleDeposits(draftDep);
+        onToggleWithdrawals(draftWith);
     }
-
 
     return (
         <Dialog>
             <div className="flex">
                 <DialogTrigger className="hover:cursor-pointer">
-                    <IoMdOptions onClick={() => console.log('Options')}/>
+                    <IoMdOptions/>
                 </DialogTrigger>
             </div>
             <DialogContent className="fixed md:top-[30vh]">
@@ -47,8 +62,8 @@ export default function FilteringModal() {
                             <Input type="number"
                                    id="min-amount"
                                    className="h-[20px] w-2/3"
-                                   value={minAmount}
-                                   onChange={(e) => setMinAmount(+e.target.value)}
+                                   value={draftMin}
+                                   onChange={(e) => setDraftMin(+e.target.value)}
                             />
                         </div>
 
@@ -57,8 +72,8 @@ export default function FilteringModal() {
                             <Input type="number"
                                    id="max-amount"
                                    className="h-[20px] w-2/3"
-                                   value={maxAmount}
-                                   onChange={(e) => setMaxAmount(+e.target.value)}
+                                   value={draftMax}
+                                   onChange={(e) => setDraftMax(+e.target.value)}
                             />
                         </div>
                     </div>
@@ -66,22 +81,22 @@ export default function FilteringModal() {
                     <div className="flex flex-col gap-y-4">
                         <div className="flex items-center gap-x-1">
                             <Checkbox id="deposits"
-                                      checked={deposits}
-                                      onCheckedChange={() => setDeposits(!deposits)}
+                                      checked={draftDep}
+                                      onCheckedChange={() => setDraftDep(!draftDep)}
                             />
                             <Label htmlFor="deposits" className="h-full">Deposits</Label>
                         </div>
 
                         <div className="flex items-center gap-x-1">
                             <Checkbox id="withdrawals"
-                                      defaultChecked={true}
-                                      onCheckedChange={() => setWithdrawals(!withdrawals)}
+                                      checked={draftWith}
+                                      onCheckedChange={() => setDraftWith(!draftWith)}
                             />
                             <Label htmlFor="withdrawals" className="h-full">Withdrawals</Label>
                         </div>
                     </div>
                 </div>
-                <Button onClick={filterTransactions}>Filter</Button>
+                <Button onClick={setFilteringValues}>Filter</Button>
             </DialogContent>
         </Dialog>
     );
