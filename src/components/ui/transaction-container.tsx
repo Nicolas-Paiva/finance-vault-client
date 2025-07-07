@@ -10,6 +10,7 @@ import {Skeleton} from '@/components/ui/skeleton';
 import {Button} from '@/components/ui/button';
 import FilteringModal from '@/components/ui/filtering-modal';
 import {useState} from 'react';
+import SortingModal from '@/components/ui/sorting-modal';
 
 type TransactionContainerProps = {
     currency: string
@@ -18,10 +19,14 @@ type TransactionContainerProps = {
 export default function TransactionContainer({currency}: TransactionContainerProps) {
 
     // Filter criteria
-    const [minAmount, setMinAmount] = useState<number>(0);
+    const [minAmount, setMinAmount] = useState<number>(1);
     const [maxAmount, setMaxAmount] = useState<number>(Number.MAX_SAFE_INTEGER);
     const [showDeposits, setShowDeposits] = useState(true);
     const [showWithdrawals, setShowWithdrawals] = useState(true);
+
+    // Sorting
+    const [sortBy, setSortBy] = useState<string>("createdAt");
+    const [sortByOrder, setSortByOrder] = useState<string>("desc");
 
     // Uses infinite query to load the pages
     const {
@@ -33,13 +38,15 @@ export default function TransactionContainer({currency}: TransactionContainerPro
         isLoading,
         isError,
     } = useInfiniteQuery<PaginatedResponse<TransactionView>, Error>({
-        queryKey: ['transactions', {minAmount, maxAmount, showDeposits, showWithdrawals}],
+        queryKey: ['transactions', {minAmount, maxAmount, showDeposits, showWithdrawals, sortBy, sortByOrder}],
         queryFn: ({pageParam = 0}) =>
             getTransactions(pageParam,
                 String(minAmount),
                 String(maxAmount),
                 showDeposits,
-                showWithdrawals),
+                showWithdrawals,
+                sortBy,
+                sortByOrder),
         getNextPageParam: (lastPage) => {
             return lastPage.last ? undefined : lastPage.pageNumber + 1;
         },
@@ -68,7 +75,9 @@ export default function TransactionContainer({currency}: TransactionContainerPro
                     onToggleDeposits={setShowDeposits}
                     onToggleWithdrawals={setShowWithdrawals}
                 />
-                <FaSortAmountDown onClick={() => console.log('Filter')}/>
+                <SortingModal
+                    propertyChange={setSortBy}
+                    orderChange={setSortByOrder}/>
             </div>
         </div>
         <ScrollArea className="h-[300px] w-[90%] mx-auto">

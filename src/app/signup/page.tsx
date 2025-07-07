@@ -242,8 +242,7 @@ export default function SignUp() {
                             </div>
                         </div>
                         {notCheckedError &&
-                            <p className="text-xs text-destructive mb-6">Please agree to our terms before providing your
-                                credentials.
+                            <p className="text-xs text-destructive mb-6">Please agree to our terms before registering.
                             </p>
                         }
 

@@ -8,10 +8,13 @@ import {TransactionView} from '@/lib/types/transaction-types';
  * selected by the user and sends the request to the API
  */
 export async function getTransactions(page: number = 0,
-                                              minAmount: string = '',
-                                              maxAmount: string = '',
-                                              deposits: boolean = false,
-                                              withdrawals: boolean = false) {
+                                      minAmount: string = '',
+                                      maxAmount: string = '',
+                                      deposits: boolean = false,
+                                      withdrawals: boolean = false,
+                                      sortBy: string = 'createdAt',
+                                      order: string = 'desc'
+) {
 
     let queryString = `/transactions?page=${page}`;
 
@@ -22,10 +25,11 @@ export async function getTransactions(page: number = 0,
         queryString += `&type=withdrawal`;
     }
 
-
     queryString = queryString
         .concat(`&minValue=${minAmount}`)
-        .concat(`&maxValue=${maxAmount}`)
+        .concat(`&maxValue=${maxAmount}`);
+
+    queryString = queryString.concat(`&sortBy=${sortBy}&order=${order}`)
 
     console.log(queryString);
     const response = await customFetch(queryString);
