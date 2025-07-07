@@ -31,8 +31,6 @@ export async function getTransactions(page: number = 0,
 
     queryString = queryString.concat(`&sortBy=${sortBy}&order=${order}`)
 
-    console.log(queryString);
     const response = await customFetch(queryString);
-    console.log(response.data);
     return response.data;
 }

@@ -1,7 +1,6 @@
 import {Card, CardTitle} from '@/components/ui/card';
 import {ScrollArea} from '@/components/ui/scroll-area';
 import Transaction from '@/components/ui/transaction';
-import {FaSortAmountDown} from 'react-icons/fa';
 import {useInfiniteQuery} from '@tanstack/react-query';
 import {getTransactions} from '@/lib/services/transaction-service';
 import {PaginatedResponse} from '@/lib/types/pagination';
@@ -23,10 +22,28 @@ export default function TransactionContainer({currency}: TransactionContainerPro
     const [maxAmount, setMaxAmount] = useState<number>(Number.MAX_SAFE_INTEGER);
     const [showDeposits, setShowDeposits] = useState(true);
     const [showWithdrawals, setShowWithdrawals] = useState(true);
+    const [isFiltered, setIsFiltered] = useState<boolean>(false);
 
     // Sorting
-    const [sortBy, setSortBy] = useState<string>("createdAt");
-    const [sortByOrder, setSortByOrder] = useState<string>("desc");
+    const [sortBy, setSortBy] = useState<string>('createdAt');
+    const [sortByOrder, setSortByOrder] = useState<string>('desc');
+    const [isSorted, setIsSorted] = useState<boolean>(false);
+
+
+    function restoreDefaultFilters(): void {
+        setIsFiltered(false);
+        setMinAmount(1);
+        setMaxAmount(Number.MAX_SAFE_INTEGER);
+        setShowDeposits(true);
+        setShowWithdrawals(true);
+    }
+
+
+    function restoreDefaultSorting(): void {
+        setSortBy('createdAt');
+        setSortByOrder('desc');
+    }
+
 
     // Uses infinite query to load the pages
     const {
@@ -74,10 +91,17 @@ export default function TransactionContainer({currency}: TransactionContainerPro
                     onMaxChange={setMaxAmount}
                     onToggleDeposits={setShowDeposits}
                     onToggleWithdrawals={setShowWithdrawals}
+                    filtered={isFiltered}
+                    setIsFiltered={setIsFiltered}
+                    restoreDefault={restoreDefaultFilters}
                 />
                 <SortingModal
                     propertyChange={setSortBy}
-                    orderChange={setSortByOrder}/>
+                    orderChange={setSortByOrder}
+                    isSorted={isSorted}
+                    setIsSorted={setIsSorted}
+                    restoreDefault={restoreDefaultSorting}
+                />
             </div>
         </div>
         <ScrollArea className="h-[300px] w-[90%] mx-auto">

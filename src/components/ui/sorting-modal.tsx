@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {
-    Dialog,
+    Dialog, DialogClose,
     DialogContent,
     DialogDescription,
     DialogHeader,
@@ -21,30 +21,36 @@ import {
 type SortingModalProps = {
     propertyChange: (v: string) => void;
     orderChange: (v: string) => void;
+    isSorted: boolean,
+    setIsSorted: (v: boolean) => void,
+    restoreDefault: () => void;
 };
 
 export default function SortingModal({
-                                           propertyChange,
-                                           orderChange,
-                                       }: SortingModalProps) {
+                                         propertyChange,
+                                         orderChange,
+                                         isSorted,
+                                         setIsSorted,
+                                         restoreDefault
+                                     }: SortingModalProps) {
 
     // Local draft state
-    const [draftProperty, setDraftProperty] = useState("createdAt");
-    const [draftOrder, setDraftOrder] = useState("desc");
+    const [draftProperty, setDraftProperty] = useState('createdAt');
+    const [draftOrder, setDraftOrder] = useState('desc');
 
 
     function setSortingValues(): void {
-        console.log(draftProperty);
-        console.log(draftOrder);
+        setIsSorted(true);
         propertyChange(draftProperty);
         orderChange(draftOrder);
     }
+
 
     return (
         <Dialog>
             <div className="flex">
                 <DialogTrigger className="hover:cursor-pointer">
-                    <FaSortAmountDown/>
+                    <FaSortAmountDown className={`${isSorted ? 'text-green-500' : ''}`}/>
                 </DialogTrigger>
             </div>
             <DialogContent className="fixed md:top-[30vh]">
@@ -58,7 +64,7 @@ export default function SortingModal({
                 <div className="w-full flex flex-row gap-x-4">
                     <Select onValueChange={(value) => setDraftProperty(value)}>
                         <SelectTrigger>
-                            <SelectValue placeholder="Select a property" />
+                            <SelectValue placeholder="Select a property"/>
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
@@ -70,7 +76,7 @@ export default function SortingModal({
 
                     <Select onValueChange={(value) => setDraftOrder(value)}>
                         <SelectTrigger>
-                            <SelectValue placeholder="Select the order" />
+                            <SelectValue placeholder="Select the order"/>
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
@@ -80,7 +86,18 @@ export default function SortingModal({
                         </SelectContent>
                     </Select>
                 </div>
-                <Button onClick={setSortingValues}>Sort</Button>
+                <DialogClose asChild>
+                    <Button onClick={() => {
+                        setSortingValues();
+                    }}>Sort</Button>
+                </DialogClose>
+
+                <DialogClose asChild>
+                    <Button type="button" variant="outline" onClick={() => {
+                        setIsSorted(false);
+                        restoreDefault();
+                    }}>Reset</Button>
+                </DialogClose>
             </DialogContent>
         </Dialog>
     );

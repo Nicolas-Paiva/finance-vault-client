@@ -1,5 +1,5 @@
 import {
-    Dialog,
+    Dialog, DialogClose,
     DialogContent,
     DialogDescription,
     DialogHeader,
@@ -14,10 +14,13 @@ import {Checkbox} from '@/components/ui/checkbox';
 import {Button} from '@/components/ui/button';
 
 type FilteringModalProps = {
-    onMinChange: (v: number) => void;
-    onMaxChange: (v: number) => void;
-    onToggleDeposits: (v: boolean) => void;
-    onToggleWithdrawals: (v: boolean) => void;
+    onMinChange: (v: number) => void,
+    onMaxChange: (v: number) => void,
+    onToggleDeposits: (v: boolean) => void,
+    onToggleWithdrawals: (v: boolean) => void,
+    filtered: boolean,
+    setIsFiltered: (v: boolean) => void,
+    restoreDefault: () => void;
 };
 
 export default function FilteringModal({
@@ -25,26 +28,32 @@ export default function FilteringModal({
                                            onMaxChange,
                                            onToggleDeposits,
                                            onToggleWithdrawals,
+                                           filtered,
+                                           setIsFiltered,
+                                           restoreDefault
                                        }: FilteringModalProps) {
 
     // Local draft state
-    const [draftMin, setDraftMin] = useState(1);
-    const [draftMax, setDraftMax] = useState(10);
-    const [draftDep, setDraftDep] = useState(true);
-    const [draftWith, setDraftWith] = useState(true);
+    const [draftMin, setDraftMin] = useState<number>(1);
+    const [draftMax, setDraftMax] = useState<number>(10);
+    const [draftDep, setDraftDep] = useState<boolean>(true);
+    const [draftWith, setDraftWith] = useState<boolean>(true);
+
 
     function setFilteringValues(): void {
+        setIsFiltered(true);
         onMinChange(draftMin);
         onMaxChange(draftMax);
         onToggleDeposits(draftDep);
         onToggleWithdrawals(draftWith);
     }
 
+
     return (
         <Dialog>
             <div className="flex">
                 <DialogTrigger className="hover:cursor-pointer">
-                    <IoMdOptions/>
+                    <IoMdOptions className={`${filtered ? 'text-green-500' : ''}`}/>
                 </DialogTrigger>
             </div>
             <DialogContent className="fixed md:top-[30vh]">
@@ -96,7 +105,18 @@ export default function FilteringModal({
                         </div>
                     </div>
                 </div>
-                <Button onClick={setFilteringValues}>Filter</Button>
+                <DialogClose asChild>
+                    <Button type="button" onClick={() => {
+                        setFilteringValues();
+                    }}>Filter</Button>
+                </DialogClose>
+
+                <DialogClose asChild>
+                    <Button type="button" variant="outline" onClick={() => {
+                        setIsFiltered(false);
+                        restoreDefault();
+                    }}>Reset</Button>
+                </DialogClose>
             </DialogContent>
         </Dialog>
     );
