@@ -77,12 +77,12 @@ export default function TransactionContainer({currency}: TransactionContainerPro
     }
 
     if (isLoading || isPending) {
-        return <Skeleton className="h-[300px] w-full rounded-xl mt-4"></Skeleton>;
+        return <Skeleton className="h-[300px] w-full md:w-[50%] rounded-xl mt-4"></Skeleton>;
     }
 
     const transactions: TransactionView[] | undefined = data?.pages.flatMap(page => page.content);
 
-    return <Card className="md:w-[50%] md:mx-auto mt-6 py-2">
+    return <Card className="md:w-[50%] md:mx-auto mt-6 py-2 h-full md:h-[30vh] mb-4">
         <div className="flex items-center justify-between w-[90%] mx-auto">
             <p className="font-bold">Transactions</p>
             <div className="flex gap-x-4 mr-2">
@@ -104,7 +104,7 @@ export default function TransactionContainer({currency}: TransactionContainerPro
                 />
             </div>
         </div>
-        <ScrollArea className="h-[300px] w-[90%] mx-auto">
+        <ScrollArea className="h-[350px] w-[90%] mx-auto">
             {transactions?.length > 0 ? transactions?.map((transaction: TransactionView) => {
                     return <Transaction {...transaction} currency={currency} key={transaction.id}/>;
                 }) :
@@ -114,11 +114,15 @@ export default function TransactionContainer({currency}: TransactionContainerPro
         </ScrollArea>
 
         <div className="text-center">
-            <Button variant="outline"
-                    disabled={isFetching || !hasNextPage}
-                    onClick={() => fetchNextPage()}>
-                {isFetching ? 'Fetching...' : 'Load more'}
-            </Button>
+            {transactions?.length > 0 ?
+                <Button variant="outline"
+                        disabled={isFetching || !hasNextPage}
+                        onClick={() => fetchNextPage()}>
+                    {isFetching ? 'Fetching...' : 'Load more'}
+                </Button>
+                :
+                ''
+            }
         </div>
     </Card>;
 };
