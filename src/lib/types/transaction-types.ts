@@ -5,3 +5,8 @@ export type TransactionView = {
     senderName: string,
     receiverName: string
 }
+
+export type Transaction = {
+    receiverEmail: string,
+    amount: number
+}

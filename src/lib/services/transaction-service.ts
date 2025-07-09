@@ -1,6 +1,5 @@
 import customFetch from '@/lib/axios/customAxios';
-import {PaginatedResponse} from '@/lib/types/pagination';
-import {TransactionView} from '@/lib/types/transaction-types';
+import {Transaction} from '@/lib/types/transaction-types';
 
 
 /**
@@ -32,5 +31,10 @@ export async function getTransactions(page: number = 0,
     queryString = queryString.concat(`&sortBy=${sortBy}&order=${order}`)
 
     const response = await customFetch(queryString);
+    return response.data;
+}
+
+export async function makeTransaction(transaction: Transaction) {
+    const response = await customFetch.post('/transactions', transaction)
     return response.data;
 }
