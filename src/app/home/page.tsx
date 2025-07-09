@@ -1,11 +1,8 @@
 'use client';
-import {Card, CardTitle} from '@/components/ui/card';
 import NotificationDropdown from '@/components/ui/notification-dropdown';
 import {useSummary} from '@/lib/hooks/useSummary';
-import {formatCurrency} from '@/lib/utils/utils';
 import {Skeleton} from '@/components/ui/skeleton';
 import React from 'react';
-import HomeActionBar from '@/components/ui/home-actions-navbar';
 import TransactionContainer from '@/components/ui/transaction-container';
 import {ThemeToggle} from '@/components/ui/theme-toggle';
 import ActionsNavbar from '@/components/ui/home-actions-navbar';
@@ -15,7 +12,6 @@ import BalanceContainer from '@/components/ui/balance-container';
  * Represents the home page, displaying relevant user data.
  * Also receives information about the currency, which is
  * passed down to other components as props
- * @constructor
  */
 export default function Home() {
     const {data, isPending, isError} = useSummary();
