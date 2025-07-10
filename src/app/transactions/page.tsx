@@ -12,7 +12,7 @@ import {useMutation} from '@tanstack/react-query';
 import {makeTransaction} from '@/lib/services/transaction-service';
 import {Transaction} from '@/lib/types/transaction-types';
 import ActionsNavbar from '@/components/ui/home-actions-navbar';
-import {MdError} from 'react-icons/md';
+import {MdErrorOutline} from 'react-icons/md';
 import {ThemeToggle} from '@/components/ui/theme-toggle';
 import NotificationDropdown from '@/components/ui/notification-dropdown';
 
@@ -56,19 +56,19 @@ export default function TransactionsPage() {
     }
 
     return <div className="flex flex-col h-[100vh] md:h-auto">
-        <div className="flex gap-x-4">
+        <div className="flex justify-end gap-x-4 mt-4 px-4">
             <ThemeToggle/>
             <NotificationDropdown numberOfNotifications={data?.numberOfNotifications || 0}/>
         </div>
         {data && <BalanceContainer balance={data?.balance} currency={data?.currency}/>}
         <ActionsNavbar className="h-[75px] md:w-[50%] md:mx-auto mt-6 hidden md:block"/>
         {transactionError && <Card className="h-[10px] w-full mt-6 flex justify-center bg-destructive border-none">
-            <div className="flex items-center gap-x-2 pl-2 text-background">
-                <MdError size={20}/>
+            <div className="flex items-center gap-x-2 pl-2 text-white">
+                <MdErrorOutline size={20} />
                 <p className="mb-1">{transactionError}</p>
             </div>
         </Card>}
-        <Card className="h-[300px] w-full md:w-[50%] mx-auto mt-2">
+        <Card className={`h-[300px] w-full md:w-[50%] mx-auto mt-${transactionError ? '2' : '6'}`}>
             <CardTitle className="text-center">Send Money</CardTitle>
             <div className="w-[90%] mx-auto">
                 <Label htmlFor="email" className="mb-1 ml-1">Email</Label>
