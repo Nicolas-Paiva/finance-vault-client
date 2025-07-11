@@ -3,21 +3,61 @@
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
 import {ThemeToggle} from '@/components/ui/theme-toggle';
 import NotificationDropdown from '@/components/ui/notification-dropdown';
-import React from 'react';
+import React, {useState} from 'react';
 import {useSummary} from '@/lib/hooks/useSummary';
 import {useRouter} from 'next/navigation';
 import {CgProfile} from 'react-icons/cg';
 import {MdOutlineMailOutline} from 'react-icons/md';
 import {GrCurrency} from 'react-icons/gr';
 import {TbLockPassword} from 'react-icons/tb';
-import SettingsDropdown from '@/components/ui/settings-dropdown';
 import ActionsNavbar from '@/components/ui/home-actions-navbar';
 import ProfileSettingsModal from '@/components/ui/profile-settings-modal';
+import {CiSettings} from 'react-icons/ci';
+import {useMutation} from '@tanstack/react-query';
+import {changeUserEmail, changeUserName, changeUserPassword} from '@/lib/services/profile-service';
 
 export default function Profile() {
     const {data, isPending, isError} = useSummary();
 
+    const [isEditing, setIsEditing] = useState<boolean>(false);
+
     const router = useRouter();
+
+    const changeNameMutation = useMutation({
+        mutationFn: changeUserName,
+
+        onSuccess: () => {
+            console.log('Name changed');
+        },
+
+        onError: (e) => {
+            console.log(e.message);
+        }
+    })
+
+    const changeEmailMutation = useMutation({
+        mutationFn: changeUserEmail,
+
+        onSuccess: () => {
+            console.log('Email changed');
+        },
+
+        onError: (e) => {
+            console.log(e.message);
+        }
+    })
+
+    const changePasswordMutation = useMutation({
+        mutationFn: changeUserPassword,
+
+        onSuccess: () => {
+            console.log('Password changed');
+        },
+
+        onError: (e) => {
+            console.log(e.message);
+        }
+    })
 
     if (isError) {
         router.push('/');
@@ -32,7 +72,7 @@ export default function Profile() {
             <Card className="md:w-[50%] md:mx-auto mt-16 pb-12 pt-6">
                 <CardHeader className="flex justify-between">
                     <CardTitle className="text-center">Profile</CardTitle>
-                    <SettingsDropdown/>
+                    <CiSettings size={25} onClick={() => setIsEditing(!isEditing)}/>
                 </CardHeader>
                 <CardContent>
                     <div className="flex gap-x-2">
@@ -40,8 +80,8 @@ export default function Profile() {
                             <CgProfile className="mt-1"/>
                             <h1 className="font-bold">Name</h1>
                         </div>
-                        <p>Bartholomeu Kuma</p>
-                        <ProfileSettingsModal type="name"/>
+                        <p>{data?.name}</p>
+                        {isEditing && <ProfileSettingsModal type="name" onSubmit={changeNameMutation.mutate}/>}
                     </div>
 
                     <div className="flex gap-x-2 mt-4">
@@ -49,8 +89,8 @@ export default function Profile() {
                             <MdOutlineMailOutline className="mt-1"/>
                             <h1 className="font-bold">Email</h1>
                         </div>
-                        <p>kuma@gmail.com</p>
-                        <ProfileSettingsModal type="email"/>
+                        <p>{data?.email}</p>
+                        {isEditing && <ProfileSettingsModal type="email" onSubmit={changeEmailMutation.mutate}/>}
                     </div>
 
                     <div className="flex gap-x-2 mt-4">
@@ -59,7 +99,7 @@ export default function Profile() {
                             <h1 className="font-bold">Password</h1>
                         </div>
                         <p>********</p>
-                        <ProfileSettingsModal type="password"/>
+                        {isEditing && <ProfileSettingsModal type="password" onSubmit={changePasswordMutation.mutate}/>}
                     </div>
 
                     <div className="flex gap-x-2 mt-4">
@@ -67,7 +107,7 @@ export default function Profile() {
                             <GrCurrency className="mt-1"/>
                             <h1 className="font-bold">Currency</h1>
                         </div>
-                        <p>Euro</p>
+                        <p>{data?.currency}</p>
                     </div>
                 </CardContent>
             </Card>

@@ -3,6 +3,7 @@ import {redirect} from 'next/navigation';
 
 export type SummaryResponse = {
     name: string;
+    email: string;
     balance: number;
     currency: string;
     monthlyDeposits: number;
@@ -19,7 +20,7 @@ export async function getSummary(): Promise<SummaryResponse> {
         return response.data;
     } catch (error: any) {
         if (error.response?.status === 401) {
-            redirect('/login')
+            redirect('/login');
         }
         throw error;
     }
