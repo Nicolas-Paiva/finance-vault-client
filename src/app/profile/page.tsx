@@ -12,6 +12,7 @@ import {GrCurrency} from 'react-icons/gr';
 import {TbLockPassword} from 'react-icons/tb';
 import SettingsDropdown from '@/components/ui/settings-dropdown';
 import ActionsNavbar from '@/components/ui/home-actions-navbar';
+import ProfileSettingsModal from '@/components/ui/profile-settings-modal';
 
 export default function Profile() {
     const {data, isPending, isError} = useSummary();
@@ -28,7 +29,7 @@ export default function Profile() {
                 <NotificationDropdown numberOfNotifications={data?.numberOfNotifications || 0}/>
             </div>
             <ActionsNavbar className="h-[75px] md:w-[50%] md:mx-auto mt-6 hidden md:block"/>
-            <Card className="mt-16 pb-12 pt-6">
+            <Card className="md:w-[50%] md:mx-auto mt-16 pb-12 pt-6">
                 <CardHeader className="flex justify-between">
                     <CardTitle className="text-center">Profile</CardTitle>
                     <SettingsDropdown/>
@@ -40,6 +41,7 @@ export default function Profile() {
                             <h1 className="font-bold">Name</h1>
                         </div>
                         <p>Bartholomeu Kuma</p>
+                        <ProfileSettingsModal type="name"/>
                     </div>
 
                     <div className="flex gap-x-2 mt-4">
@@ -48,6 +50,7 @@ export default function Profile() {
                             <h1 className="font-bold">Email</h1>
                         </div>
                         <p>kuma@gmail.com</p>
+                        <ProfileSettingsModal type="email"/>
                     </div>
 
                     <div className="flex gap-x-2 mt-4">
@@ -56,6 +59,7 @@ export default function Profile() {
                             <h1 className="font-bold">Password</h1>
                         </div>
                         <p>********</p>
+                        <ProfileSettingsModal type="password"/>
                     </div>
 
                     <div className="flex gap-x-2 mt-4">
