@@ -13,3 +13,9 @@ export type NameChangeRequest = {
     newName: string,
     newLastName: string
 }
+
+export type ProfileDataChangeResponse = {
+    success: boolean,
+    message: string,
+    jwt: string
+}

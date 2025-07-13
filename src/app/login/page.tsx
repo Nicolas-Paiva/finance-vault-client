@@ -50,7 +50,6 @@ export default function SignUp() {
             setEmail('');
             setPassword('');
             router.push('/home');
-
         },
 
         onError: () => {

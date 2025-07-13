@@ -15,9 +15,13 @@ import ProfileSettingsModal from '@/components/ui/profile-settings-modal';
 import {CiSettings} from 'react-icons/ci';
 import {useMutation} from '@tanstack/react-query';
 import {changeUserEmail, changeUserName, changeUserPassword} from '@/lib/services/profile-service';
+import {ProfileDataChangeResponse} from '@/lib/types/profile';
+import {toast} from 'sonner';
+
+// TODO: Fix bug when changing data
 
 export default function Profile() {
-    const {data, isPending, isError} = useSummary();
+    const {data, isPending, isError, refetch} = useSummary();
 
     const [isEditing, setIsEditing] = useState<boolean>(false);
 
@@ -26,41 +30,46 @@ export default function Profile() {
     const changeNameMutation = useMutation({
         mutationFn: changeUserName,
 
-        onSuccess: () => {
+        onSuccess: (response: ProfileDataChangeResponse): void => {
             console.log('Name changed');
+            localStorage.setItem('token', response.jwt);
+            refetch();
         },
 
         onError: (e) => {
-            console.log(e.message);
+            toast.error(e.message);
         }
     })
 
     const changeEmailMutation = useMutation({
         mutationFn: changeUserEmail,
 
-        onSuccess: () => {
+        onSuccess: (response: ProfileDataChangeResponse): void => {
             console.log('Email changed');
+            localStorage.setItem('token', response.jwt);
+            refetch();
         },
 
         onError: (e) => {
-            console.log(e.message);
+            toast.error(e.message);
         }
     })
 
     const changePasswordMutation = useMutation({
         mutationFn: changeUserPassword,
 
-        onSuccess: () => {
+        onSuccess: (response: ProfileDataChangeResponse): void => {
             console.log('Password changed');
+            localStorage.setItem('token', response.jwt);
         },
 
         onError: (e) => {
-            console.log(e.message);
+            toast.error(e.message);
         }
     })
 
     if (isError) {
-        router.push('/');
+        router.push('/login');
     }
 
     return (<div className="flex flex-col h-[100vh] md:h-auto">
@@ -81,7 +90,7 @@ export default function Profile() {
                             <h1 className="font-bold">Name</h1>
                         </div>
                         <p>{data?.name}</p>
-                        {isEditing && <ProfileSettingsModal type="name" onSubmit={changeNameMutation.mutate}/>}
+                        {isEditing && <ProfileSettingsModal type="name" onSubmit={changeNameMutation.mutate} onSuccess={refetch}/>}
                     </div>
 
                     <div className="flex gap-x-2 mt-4">
@@ -90,7 +99,7 @@ export default function Profile() {
                             <h1 className="font-bold">Email</h1>
                         </div>
                         <p>{data?.email}</p>
-                        {isEditing && <ProfileSettingsModal type="email" onSubmit={changeEmailMutation.mutate}/>}
+                        {isEditing && <ProfileSettingsModal type="email" onSubmit={changeEmailMutation.mutate} onSuccess={refetch}/>}
                     </div>
 
                     <div className="flex gap-x-2 mt-4">
@@ -99,7 +108,7 @@ export default function Profile() {
                             <h1 className="font-bold">Password</h1>
                         </div>
                         <p>********</p>
-                        {isEditing && <ProfileSettingsModal type="password" onSubmit={changePasswordMutation.mutate}/>}
+                        {isEditing && <ProfileSettingsModal type="password" onSubmit={changePasswordMutation.mutate} onSuccess={refetch}/>}
                     </div>
 
                     <div className="flex gap-x-2 mt-4">

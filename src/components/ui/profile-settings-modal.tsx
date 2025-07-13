@@ -1,4 +1,4 @@
-import {Dialog, DialogContent, DialogTitle, DialogTrigger} from '@/components/ui/dialog';
+import {Dialog, DialogClose, DialogContent, DialogTitle, DialogTrigger} from '@/components/ui/dialog';
 import {Label} from '@/components/ui/label';
 import {FiEdit2} from 'react-icons/fi';
 import {Input} from '@/components/ui/input';
@@ -7,8 +7,8 @@ import {useState} from 'react';
 import {EmailChangeRequest, NameChangeRequest, PasswordChangeRequest} from '@/lib/types/profile';
 
 type ProfileSettingsModalProps = {
-    type: string
-    onSubmit: (request: EmailChangeRequest | PasswordChangeRequest | NameChangeRequest) => void
+    type: string,
+    onSubmit: (request: EmailChangeRequest | PasswordChangeRequest | NameChangeRequest) => void,
 }
 
 export default function ProfileSettingsModal({type, onSubmit}: ProfileSettingsModalProps) {
@@ -49,9 +49,6 @@ export default function ProfileSettingsModal({type, onSubmit}: ProfileSettingsMo
                 onSubmit(emailRequest);
                 break;
             case 'password':
-                console.log(oldPassword);
-                console.log(newPassword);
-                console.log(newPasswordConfirmation);
                 onSubmit(passwordRequest);
                 break;
         }
@@ -112,7 +109,9 @@ export default function ProfileSettingsModal({type, onSubmit}: ProfileSettingsMo
                         }}/>
                     </>
                 }
-                <Button className="mt-2" onClick={changeData}>Save</Button>
+                <DialogClose asChild>
+                    <Button type="submit" className="mt-2" onClick={changeData}>Save</Button>
+                </DialogClose>
             </DialogContent>
         </Dialog>
     );

@@ -90,7 +90,7 @@ export default function TransactionsPage() {
                        className="w-full mx-auto"
                 />
 
-                <Button className="bg-violet-500 w-full mt-6"
+                <Button className="w-full mt-6"
                         onClick={handleTransaction}>
                     Send</Button>
             </div>

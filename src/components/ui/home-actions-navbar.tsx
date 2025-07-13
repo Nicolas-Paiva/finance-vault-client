@@ -20,7 +20,7 @@ export default function ActionsNavbar({className}: ActionNavbarProps) {
                 <GrTransaction size="20px"/>
             </Link>
 
-            <Link href="/add" className="flex flex-col items-center p-2 rounded hover:bg-muted hover:cursor-pointer">
+            <Link href="/funds" className="flex flex-col items-center p-2 rounded hover:bg-muted hover:cursor-pointer">
                 <CiCirclePlus size="40px"/>
             </Link>
 
