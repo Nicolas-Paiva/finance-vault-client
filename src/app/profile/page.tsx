@@ -18,8 +18,6 @@ import {changeUserEmail, changeUserName, changeUserPassword} from '@/lib/service
 import {ProfileDataChangeResponse} from '@/lib/types/profile';
 import {toast} from 'sonner';
 
-// TODO: Fix bug when changing data
-
 export default function Profile() {
     const {data, isPending, isError, refetch} = useSummary();
 
@@ -81,7 +79,7 @@ export default function Profile() {
             <Card className="md:w-[50%] md:mx-auto mt-16 pb-12 pt-6">
                 <CardHeader className="flex justify-between">
                     <CardTitle className="text-center">Profile</CardTitle>
-                    <CiSettings size={25} onClick={() => setIsEditing(!isEditing)}/>
+                    <CiSettings size={25} className="hover:text-violet-600" onClick={() => setIsEditing(!isEditing)}/>
                 </CardHeader>
                 <CardContent>
                     <div className="flex gap-x-2">

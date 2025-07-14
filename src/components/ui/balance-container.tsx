@@ -9,7 +9,7 @@ type BalanceContainerProps = {
 }
 
 export default function BalanceContainer({balance, currency}: BalanceContainerProps) {
-    return <Card className="mt-6 px-6 md:w-[50%] md:mx-auto" onClick={() => console.log('??')}>
+    return <Card className="mt-6 md:mt-12 px-6 md:w-[50%] md:mx-auto" onClick={() => console.log('??')}>
         <div className="flex justify-between items-center">
             <div>
                 <CardTitle>Total balance</CardTitle>

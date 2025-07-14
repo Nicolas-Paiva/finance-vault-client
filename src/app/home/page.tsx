@@ -7,6 +7,7 @@ import TransactionContainer from '@/components/ui/transaction-container';
 import {ThemeToggle} from '@/components/ui/theme-toggle';
 import ActionsNavbar from '@/components/ui/home-actions-navbar';
 import BalanceContainer from '@/components/ui/balance-container';
+import {useRouter} from 'next/navigation';
 
 /**
  * Represents the home page, displaying relevant user data.
@@ -16,23 +17,24 @@ import BalanceContainer from '@/components/ui/balance-container';
 export default function Home() {
     const {data, isPending, isError} = useSummary();
 
+    const router = useRouter();
+
     if (isError) {
-        return (
-            <h1>Error loading data. Please try again later.</h1>
-        );
+        router.push('/login');
     }
 
     if (isPending) {
         return (
             <>
                 <Skeleton className="h-[30px] w-full rounded-xl mt-8"/>
-                <div className="md:w-[500px] mx-auto">
+                <div className="md:w-[50%] mx-auto">
                     <div className="flex flex-col">
                         <Skeleton className="h-[125px] w-full rounded-xl mt-4"/>
-                        <Skeleton className="h-[85px] w-full rounded-xl mt-4"/>
+                        <Skeleton className="hidden md:block h-[85px] w-full rounded-xl mt-4"/>
+                        <Skeleton className="h-[400px] w-full rounded-xl mt-4"/>
                     </div>
-                    <Skeleton className="h-[300px] w-full rounded-xl mt-4"></Skeleton>
                 </div>
+                <Skeleton className="h-[90px] w-full rounded-xl mt-12 md:hidden"/>
             </>
         );
     }

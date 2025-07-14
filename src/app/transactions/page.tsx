@@ -15,6 +15,7 @@ import ActionsNavbar from '@/components/ui/home-actions-navbar';
 import {MdErrorOutline} from 'react-icons/md';
 import {ThemeToggle} from '@/components/ui/theme-toggle';
 import NotificationDropdown from '@/components/ui/notification-dropdown';
+import {Skeleton} from '@/components/ui/skeleton';
 
 export default function TransactionsPage() {
 
@@ -53,6 +54,22 @@ export default function TransactionsPage() {
         toast.error('Please log in to try again');
         router.push('/');
         return <h1>An error has occurred. Please try again later</h1>;
+    }
+
+    if (isPending) {
+        return (
+            <>
+                <Skeleton className="h-[30px] w-full rounded-xl mt-8"/>
+                <div className="md:w-[50%] mx-auto">
+                    <div className="flex flex-col">
+                        <Skeleton className="h-[125px] w-full rounded-xl mt-4"/>
+                        <Skeleton className="hidden md:block h-[85px] w-full rounded-xl mt-4"/>
+                        <Skeleton className="h-[400px] w-full rounded-xl mt-4"/>
+                    </div>
+                </div>
+                <Skeleton className="h-[60px] w-full rounded-xl mt-12 md:hidden"/>
+            </>
+        );
     }
 
     return <div className="flex flex-col h-[100vh] md:h-auto">

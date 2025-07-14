@@ -59,7 +59,7 @@ export default function ProfileSettingsModal({type, onSubmit}: ProfileSettingsMo
         <Dialog>
             <div className="flex">
                 <DialogTrigger>
-                    <FiEdit2 className="ml-4"/>
+                    <FiEdit2 className="ml-4 hover:text-violet-600"/>
                 </DialogTrigger>
             </div>
             <DialogContent>
