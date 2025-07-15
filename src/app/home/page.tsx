@@ -27,7 +27,7 @@ export default function Home() {
         return (
             <>
                 <Skeleton className="h-[30px] w-full rounded-xl mt-8"/>
-                <div className="md:w-[50%] mx-auto">
+                <div className="md:w-1/2 mx-auto">
                     <div className="flex flex-col">
                         <Skeleton className="h-[125px] w-full rounded-xl mt-4"/>
                         <Skeleton className="hidden md:block h-[85px] w-full rounded-xl mt-4"/>
@@ -41,7 +41,6 @@ export default function Home() {
 
 
     return (
-
         <div className="flex flex-col h-[100vh] md:h-auto">
             <div className="flex items-center justify-between mt-4 px-4">
                 <h1 className="text-lg md:text-2xl">Hello, {data?.name}!</h1>

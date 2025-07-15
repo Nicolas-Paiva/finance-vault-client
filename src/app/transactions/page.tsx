@@ -79,7 +79,7 @@ export default function TransactionsPage() {
         </div>
         {data && <BalanceContainer balance={data?.balance} currency={data?.currency}/>}
         <ActionsNavbar className="h-[75px] md:w-[50%] md:mx-auto mt-6 hidden md:block"/>
-        {transactionError && <Card className="h-[10px] w-full mt-6 flex justify-center bg-destructive border-none">
+        {transactionError && <Card className="h-[10px] w-full md:w-1/2 md:mx-auto mt-6 flex justify-center bg-destructive border-none">
             <div className="flex items-center gap-x-2 pl-2 text-white">
                 <MdErrorOutline size={20} />
                 <p className="mb-1">{transactionError}</p>
@@ -93,6 +93,7 @@ export default function TransactionsPage() {
                        id="email"
                        value={email}
                        onChange={(e) => setEmail(e.target.value)}
+                       onClick={() => setTransactionError('')}
                        placeholder="email@email.com"
                        className="w-full mx-auto"
                 />
@@ -103,6 +104,7 @@ export default function TransactionsPage() {
                        value={amount}
                        min={1}
                        onChange={(e) => setAmount(+e.target.value)}
+                       onClick={() => setTransactionError('')}
                        placeholder="1.00"
                        className="w-full mx-auto"
                 />

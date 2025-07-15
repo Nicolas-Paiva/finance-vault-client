@@ -15,7 +15,7 @@ import {addFunds} from '@/lib/services/funds-service';
 import {toast} from 'sonner';
 
 export default function Funds() {
-    const {data, isPending, isError} = useSummary();
+    const {data, isPending, isError, refetch} = useSummary();
 
     const [amount, setAmount] = useState(1);
 
@@ -24,6 +24,7 @@ export default function Funds() {
 
         onSuccess: () => {
             toast.success('Funds added');
+            refetch();
         },
 
         onError: () => {

@@ -39,6 +39,7 @@ export function checkNumber(number: string) {
 
 
 export function formatCurrency(amount: number, currency: string): string {
+    console.log(amount);
     return new Intl.NumberFormat('pt-PT', {
         style: 'currency',
         currency

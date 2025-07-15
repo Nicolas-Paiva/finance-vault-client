@@ -6,8 +6,8 @@ export type SummaryResponse = {
     email: string;
     balance: number;
     currency: string;
-    monthlyDeposits: number;
-    monthlyWithdrawals: number;
+    monthlyDepositsTotal: number;
+    monthlyWithdrawalsTotal: number;
     numberOfNotifications: number;
 };
 
