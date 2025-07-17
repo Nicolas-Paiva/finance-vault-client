@@ -13,6 +13,7 @@ import Link from 'next/link';
 import {Button} from '@/components/ui/button';
 import {Loader2Icon} from 'lucide-react';
 import {useRouter} from 'next/navigation';
+import PasswordInput from '@/components/ui/password-input';
 
 
 export default function SignUp() {
@@ -78,14 +79,7 @@ export default function SignUp() {
                                onClick={() => setBadCredentials(false)}
                         />
 
-                        <Label htmlFor="password" className="ml-2 mb-1 mt-4">Password</Label>
-                        <Input type="password"
-                               id="password"
-                               value={password}
-                               placeholder="Password"
-                               onChange={(e) => setPassword(e.target.value)}
-                               onClick={() => setBadCredentials(false)}
-                        />
+                        <PasswordInput value={password} setPassword={setPassword} setError={setBadCredentials}/>
 
                         {badCredentials && <p className="text-sm text-destructive">Invalid username or password</p>}
 

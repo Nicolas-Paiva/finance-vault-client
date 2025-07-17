@@ -4,7 +4,6 @@ import {ThemeToggle} from '@/components/ui/theme-toggle';
 import NotificationDropdown from '@/components/ui/notification-dropdown';
 import BalanceContainer from '@/components/ui/balance-container';
 import ActionsNavbar from '@/components/ui/home-actions-navbar';
-import TransactionContainer from '@/components/ui/transaction-container';
 import React from 'react';
 import {useSummary} from '@/lib/hooks/useSummary';
 import {Card, CardTitle} from '@/components/ui/card';

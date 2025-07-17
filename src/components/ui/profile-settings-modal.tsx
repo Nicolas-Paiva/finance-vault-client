@@ -5,6 +5,7 @@ import {Input} from '@/components/ui/input';
 import {Button} from '@/components/ui/button';
 import {useState} from 'react';
 import {EmailChangeRequest, NameChangeRequest, PasswordChangeRequest} from '@/lib/types/profile';
+import PasswordInput from '@/components/ui/password-input';
 
 type ProfileSettingsModalProps = {
     type: string,
