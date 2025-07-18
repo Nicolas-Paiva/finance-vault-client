@@ -1,5 +1,6 @@
 import customFetch from '@/lib/axios/customAxios';
 import {redirect} from 'next/navigation';
+import {TransactionView} from '@/lib/types/transaction-types';
 
 export type SummaryResponse = {
     name: string;
@@ -10,6 +11,11 @@ export type SummaryResponse = {
     monthlyWithdrawalsTotal: number;
     numberOfNotifications: number;
 };
+
+export type MonthlyTransactions = {
+    deposits: TransactionView[],
+    withdrawals: TransactionView[]
+}
 
 
 // Returns the user's summary
@@ -24,4 +30,11 @@ export async function getSummary(): Promise<SummaryResponse> {
         }
         throw error;
     }
+}
+
+
+// Returns the user's monthly transactions
+export async function getMonthlyTransactions(): Promise<MonthlyTransactions> {
+    const response = await customFetch('/summary/transactions');
+    return response.data;
 }

@@ -30,7 +30,6 @@ export default function Profile() {
         mutationFn: changeUserName,
 
         onSuccess: (response: ProfileDataChangeResponse): void => {
-            console.log('Name changed');
             localStorage.setItem('token', response.jwt);
             refetch();
         },
@@ -44,7 +43,6 @@ export default function Profile() {
         mutationFn: changeUserEmail,
 
         onSuccess: (response: ProfileDataChangeResponse): void => {
-            console.log('Email changed');
             localStorage.setItem('token', response.jwt);
             refetch();
         },
@@ -58,7 +56,6 @@ export default function Profile() {
         mutationFn: changeUserPassword,
 
         onSuccess: (response: ProfileDataChangeResponse): void => {
-            console.log('Password changed');
             localStorage.setItem('token', response.jwt);
         },
 

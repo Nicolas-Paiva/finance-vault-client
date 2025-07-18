@@ -104,7 +104,7 @@ export default function TransactionContainer({currency}: TransactionContainerPro
                 />
             </div>
         </div>
-        <ScrollArea className="h-[350px] w-[90%] mx-auto">
+        <ScrollArea className="h-[350px] overflow-hidden w-[90%] mx-auto">
             {transactions?.length > 0 ? transactions?.map((transaction: TransactionView) => {
                     return <Transaction {...transaction} currency={currency} key={transaction.id}/>;
                 }) :
