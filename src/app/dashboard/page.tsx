@@ -55,7 +55,7 @@ export default function Dashboard() {
                         <p className="text-xl font-bold text-center text-green-600">{formatCurrency(data?.monthlyDepositsTotal, data?.currency)}</p>}
                 </Card>
             </section>
-            <div className="w-[90%] md:w-[70%] h-[400px] mt-4 md:mx-auto">
+            <div className="w-[90%] md:w-[70%] h-[350px] md:h-[400px] mt-4 mx-auto">
                 {transactions &&
                     <DashboardLineChart deposits={transactions.deposits} withdrawals={transactions.withdrawals}/>}
             </div>

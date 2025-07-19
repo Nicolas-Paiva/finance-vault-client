@@ -1,6 +1,6 @@
-import {LineChart, Line, CartesianGrid, XAxis, YAxis, Legend, ResponsiveContainer} from 'recharts';
+import {LineChart, Line, CartesianGrid, XAxis, YAxis, Legend, ResponsiveContainer, Tooltip} from 'recharts';
 import {TransactionView} from '@/lib/types/transaction-types';
-import {formatter} from '@/lib/utils/utils';
+import {formatCurrency, formatter} from '@/lib/utils/utils';
 
 const data = [
     {name: 'Page A', uv: 400, pv: 2400, amt: 2400},
@@ -20,6 +20,7 @@ export default function DashboardLineChart({deposits, withdrawals}: LineChartPro
         ...w,
         createdAt: formatter.format(new Date(w.createdAt))
     }));
+    console.log(formattedWithdrawals);
 
     const formattedDeposits = deposits.map((d) => ({
         ...d,
@@ -28,17 +29,19 @@ export default function DashboardLineChart({deposits, withdrawals}: LineChartPro
 
 
     return (
-        <ResponsiveContainer width="100%" height="100%">
-            <LineChart width={300}
-                       height={300}
-                       data={formattedWithdrawals}
-                       className="mr-8">
-                <CartesianGrid stroke="#aaa" strokeDasharray="5 5"/>
-                <Line type="monotone" dataKey="amount" stroke="#e7000b" name="withdrawals"/>
-                <XAxis dataKey="createdAt"/>
-                <YAxis/>
-                <Legend/>
-            </LineChart>
-        </ResponsiveContainer>
+        <Card className="h-full w-full pr-8">
+                <ResponsiveContainer width="100%" height="100%">
+                    <LineChart width={600}
+                               height={600}
+                               data={formattedWithdrawals}
+                               className="mr-8">
+                        <Line type="monotone" dataKey="amount" stroke="#e7000b" name="withdrawals"/>
+                        <XAxis dataKey="createdAt"/>
+                        <YAxis dataKey="amount"/>
+                        {/*<Tooltip content={CustomTooltip}/>*/}
+                        <Legend/>
+                    </LineChart>
+                </ResponsiveContainer>
+        </Card>
     );
 };
