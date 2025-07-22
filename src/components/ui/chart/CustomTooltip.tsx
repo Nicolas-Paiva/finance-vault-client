@@ -5,12 +5,13 @@ export default function CustomTooltip({ active, payload, label }: ContentType | 
     const isVisible = active && payload && payload.length;
 
     const data = payload[0];
-    let amount, createdAt, receiverName;
+    let total, startDate, endDate;
+
+    console.log(data);
 
     if (data) {
-        amount = data.payload.amount;
-        createdAt = data.payload.createdAt;
-        receiverName = data.payload.receiverName;
+        total = data.payload.total;
+        startDate = data.payload.week;
     } else {
         return ""
     }
@@ -20,9 +21,8 @@ export default function CustomTooltip({ active, payload, label }: ContentType | 
         <div className="bg-muted rounded" style={{ visibility: isVisible ? 'visible' : 'hidden' }}>
             {isVisible && (
                 <>
-                    <p>Amount: <span className="font-bold">{formatCurrency(amount, "EUR")}</span></p>
-                    <p className="intro">Date: <span className="font-bold">{createdAt}</span></p>
-                    <p>Receiver: <span className="font-bold">{receiverName}</span></p>
+                    <p>Amount: <span className="font-bold">{formatCurrency(total, "EUR")}</span></p>
+                    <p>Starting date: <span className="font-bold">{startDate}</span></p>
                 </>
             )}
         </div>

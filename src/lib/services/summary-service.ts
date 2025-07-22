@@ -12,9 +12,9 @@ export type SummaryResponse = {
     numberOfNotifications: number;
 };
 
-export type MonthlyTransactions = {
-    deposits: TransactionView[],
-    withdrawals: TransactionView[]
+export type WeeklyTransactions = {
+    totals: number[],
+    dates: string[]
 }
 
 
@@ -34,7 +34,7 @@ export async function getSummary(): Promise<SummaryResponse> {
 
 
 // Returns the user's monthly transactions
-export async function getMonthlyTransactions(): Promise<MonthlyTransactions> {
+export async function getMonthWeeklyTotals(): Promise<WeeklyTransactions> {
     const response = await customFetch('/summary/transactions');
     return response.data;
 }

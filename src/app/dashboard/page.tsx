@@ -11,15 +11,15 @@ import {formatCurrency} from '@/lib/utils/utils';
 import {useRouter} from 'next/navigation';
 import DashboardLineChart from '@/components/ui/chart/dashboard-line-chart';
 import {useQuery} from '@tanstack/react-query';
-import {getMonthlyTransactions} from '@/lib/services/summary-service';
+import {getMonthWeeklyTotals} from '@/lib/services/summary-service';
 
 export default function Dashboard() {
     const {data, isPending, isError} = useSummary();
 
-    const {data: transactions, isPending: isChartDataPending, isError: isChartDataError} = useQuery({
-        queryKey: ['monthlyTransactions'],
+    const {data: totals, isPending: isChartDataPending, isError: isChartDataError} = useQuery({
+        queryKey: ['weeklyTotals'],
 
-        queryFn: getMonthlyTransactions
+        queryFn: getMonthWeeklyTotals
     });
 
     const router = useRouter();
@@ -43,7 +43,7 @@ export default function Dashboard() {
             </div>
             {data && <BalanceContainer balance={data.balance} currency={data.currency}/>}
             <ActionsNavbar className="h-[75px] md:w-[50%] md:mx-auto mt-6 hidden md:block"/>
-            <section className="w-full md:w-1/2 flex justify-between gap-y-4 mx-auto mt-4">
+            <section className="w-full md:w-1/2 flex justify-between gap-y-4 mx-auto mt-6">
                 <Card className="w-[48%]">
                     <CardTitle className="text-center">Withdrawals</CardTitle>
                     {data &&
@@ -55,9 +55,9 @@ export default function Dashboard() {
                         <p className="text-xl font-bold text-center text-green-600">{formatCurrency(data?.monthlyDepositsTotal, data?.currency)}</p>}
                 </Card>
             </section>
-            <div className="w-[90%] md:w-[70%] h-[350px] md:h-[400px] mt-4 mx-auto">
-                {transactions &&
-                    <DashboardLineChart deposits={transactions.deposits} withdrawals={transactions.withdrawals}/>}
+            <div className="w-full md:w-[50%] h-[350px] md:h-[400px] mt-6 mx-auto">
+                {totals &&
+                    <DashboardLineChart weeklyTransactions={totals}/>}
             </div>
             <ActionsNavbar className="h-[75px] md:w-[50%] md:mx-auto mt-auto mb-2 md:hidden"/>
         </div>
