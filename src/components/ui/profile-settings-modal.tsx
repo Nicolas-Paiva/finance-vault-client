@@ -5,7 +5,6 @@ import {Input} from '@/components/ui/input';
 import {Button} from '@/components/ui/button';
 import {useState} from 'react';
 import {EmailChangeRequest, NameChangeRequest, PasswordChangeRequest} from '@/lib/types/profile';
-import PasswordInput from '@/components/ui/password-input';
 
 type ProfileSettingsModalProps = {
     type: string,
@@ -13,15 +12,36 @@ type ProfileSettingsModalProps = {
 }
 
 export default function ProfileSettingsModal({type, onSubmit}: ProfileSettingsModalProps) {
+    // Email
     const [newEmail, setEmail] = useState('');
     const [newEmailConfirmation, setConfirmationEmail] = useState('');
 
+    // Name
     const [newName, setNewName] = useState('');
     const [newLastName, setNewLastName] = useState('');
 
+    // Password
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [newPasswordConfirmation, setNewConfirmationPassword] = useState('');
+
+    const [buttonInactive, setButtonInactive] = useState(true);
+
+    const [emailError, setEmailError] = useState(false);
+
+    // Changes the name state and enables the button
+    // if there is also a last name
+    function nameChange(value: string): void {
+        setNewName(value);
+
+        if (newLastName.length !== 0) {
+            setButtonInactive(false);
+        }
+
+        if (newLastName.length === 0) {
+            setButtonInactive(true);
+        }
+    }
 
 
     function changeData(): void {
@@ -66,6 +86,7 @@ export default function ProfileSettingsModal({type, onSubmit}: ProfileSettingsMo
             <DialogContent>
                 <DialogTitle>Change {type}</DialogTitle>
 
+                {/* Old password input */}
                 {type === 'password' &&
                     <>
                         <Label htmlFor="old-password">Old password</Label>
@@ -78,7 +99,7 @@ export default function ProfileSettingsModal({type, onSubmit}: ProfileSettingsMo
                 <Input type={type} id={`new-${type}`} onChange={(e) => {
                     switch (type) {
                         case 'name':
-                            setNewName(e.target.value);
+                            nameChange(e.target.value);
                             break;
                         case 'email':
                             setEmail(e.target.value);
@@ -88,6 +109,7 @@ export default function ProfileSettingsModal({type, onSubmit}: ProfileSettingsMo
                     }
                 }}/>
 
+                {/* Last name input */}
                 {type === 'name' &&
                     <>
                         <Label htmlFor="last-name">Last name</Label>
@@ -96,6 +118,7 @@ export default function ProfileSettingsModal({type, onSubmit}: ProfileSettingsMo
                     </>
                 }
 
+                {/* Confirmation password/email */}
                 {type === 'name' ? '' :
                     <>
                         <Label htmlFor={`confirm-new-${type}`}>Confirm new {type}</Label>
@@ -111,7 +134,7 @@ export default function ProfileSettingsModal({type, onSubmit}: ProfileSettingsMo
                     </>
                 }
                 <DialogClose asChild>
-                    <Button type="submit" className="mt-2" onClick={changeData}>Save</Button>
+                    <Button disabled={buttonInactive} type="submit" className="mt-2" onClick={changeData}>Save</Button>
                 </DialogClose>
             </DialogContent>
         </Dialog>

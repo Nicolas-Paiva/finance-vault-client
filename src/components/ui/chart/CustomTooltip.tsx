@@ -1,13 +1,11 @@
 import {formatCurrency} from '@/lib/utils/utils';
 import {ContentType} from 'recharts/types/component/Label';
 
-export default function CustomTooltip({ active, payload, label }: ContentType | undefined) {
+export default function CustomTooltip({ active, payload }: ContentType) {
     const isVisible = active && payload && payload.length;
 
     const data = payload[0];
-    let total, startDate, endDate;
-
-    console.log(data);
+    let total, startDate;
 
     if (data) {
         total = data.payload.total;

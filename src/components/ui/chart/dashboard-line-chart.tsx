@@ -1,5 +1,4 @@
-import {LineChart, Line, CartesianGrid, XAxis, YAxis, Legend, ResponsiveContainer, Tooltip} from 'recharts';
-import {TransactionView} from '@/lib/types/transaction-types';
+import {LineChart, Line, XAxis, YAxis, Legend, ResponsiveContainer, Tooltip} from 'recharts';
 import {formatter} from '@/lib/utils/utils';
 import {Card} from '@/components/ui/card';
 import {WeeklyTransactions} from '@/lib/services/summary-service';

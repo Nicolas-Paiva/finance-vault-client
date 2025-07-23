@@ -12,6 +12,7 @@ import {useRouter} from 'next/navigation';
 import DashboardLineChart from '@/components/ui/chart/dashboard-line-chart';
 import {useQuery} from '@tanstack/react-query';
 import {getMonthWeeklyTotals} from '@/lib/services/summary-service';
+import {Skeleton} from '@/components/ui/skeleton';
 
 export default function Dashboard() {
     const {data, isPending, isError} = useSummary();
@@ -29,7 +30,18 @@ export default function Dashboard() {
     }
 
     if (isPending) {
-        return <h1>Loading...</h1>;
+        return (
+            <>
+                <Skeleton className="h-[30px] w-full rounded-xl mt-8"/>
+                <div className="md:w-1/2 mx-auto">
+                    <div className="flex flex-col">
+                        <Skeleton className="h-[125px] w-full rounded-xl mt-4"/>
+                        <Skeleton className="md:block h-[85px] w-full rounded-xl mt-4"/>
+                        <Skeleton className="h-[300px] md:h-[500px] w-full rounded-xl mt-4"/>
+                    </div>
+                </div>
+            </>
+        );
     }
 
     return (
@@ -56,6 +68,7 @@ export default function Dashboard() {
                 </Card>
             </section>
             <div className="w-full md:w-[50%] h-[350px] md:h-[400px] mt-6 mx-auto">
+                <h1 className="text-center font-bold">Weekly Expenses</h1>
                 {totals &&
                     <DashboardLineChart weeklyTransactions={totals}/>}
             </div>

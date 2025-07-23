@@ -8,7 +8,7 @@ import {useSummary} from '@/lib/hooks/useSummary';
 import {useRouter} from 'next/navigation';
 import {toast} from 'sonner';
 import React, {useState} from 'react';
-import {useMutation} from '@tanstack/react-query';
+import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {makeTransaction} from '@/lib/services/transaction-service';
 import {Transaction} from '@/lib/types/transaction-types';
 import ActionsNavbar from '@/components/ui/home-actions-navbar';
@@ -27,6 +27,8 @@ export default function TransactionsPage() {
     const [email, setEmail] = useState<string>('');
     const [amount, setAmount] = useState<number>(1);
 
+    const queryClient = useQueryClient();
+
 
     const [transactionError, setTransactionError] = useState('');
 
@@ -43,6 +45,7 @@ export default function TransactionsPage() {
 
         onSuccess: () => {
             toast.success('Transaction successful!');
+            queryClient.invalidateQueries({queryKey: ['summary']})
         },
 
         onError: (error: Error) => {

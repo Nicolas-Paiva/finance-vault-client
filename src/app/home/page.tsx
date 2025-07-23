@@ -28,11 +28,9 @@ export default function Home() {
             <>
                 <Skeleton className="h-[30px] w-full rounded-xl mt-8"/>
                 <div className="md:w-1/2 mx-auto">
-                    <div className="flex flex-col">
                         <Skeleton className="h-[125px] w-full rounded-xl mt-4"/>
                         <Skeleton className="hidden md:block h-[85px] w-full rounded-xl mt-4"/>
                         <Skeleton className="h-[400px] w-full rounded-xl mt-4"/>
-                    </div>
                 </div>
                 <Skeleton className="h-[90px] w-full rounded-xl mt-12 md:hidden"/>
             </>
@@ -49,7 +47,7 @@ export default function Home() {
                     <NotificationDropdown numberOfNotifications={data?.numberOfNotifications || 0}/>
                 </div>
             </div>
-            <BalanceContainer balance={data?.balance} currency={data?.currency}/>
+            {data && <BalanceContainer balance={data.balance} currency={data.currency}/>}
             <ActionsNavbar className="h-[75px] md:w-[50%] md:mx-auto mt-6 hidden md:block"/>
             {data?.currency && <TransactionContainer currency={data.currency}/>}
             <ActionsNavbar className="h-[75px] md:w-[50%] md:mx-auto mt-auto mb-2 md:hidden"/>
