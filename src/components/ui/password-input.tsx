@@ -22,7 +22,7 @@ export default function PasswordInput({value, setPassword, setError}: PasswordIn
                    onChange={(e) => setPassword(e.target.value)}
                    onClick={() => setError(false)}
             />
-            <span className="absolute top-[38%] translate-y-1/2 right-2 hover:cursor-pointer"
+            <span className="absolute top-[38%] translate-y-1/2 right-4 hover:cursor-pointer"
                   onClick={() => {
                       if (inputType === 'password') {
                           setInputType('text');

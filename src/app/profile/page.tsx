@@ -30,6 +30,7 @@ export default function Profile() {
         mutationFn: changeUserName,
 
         onSuccess: (response: ProfileDataChangeResponse): void => {
+            toast.success('Name changed successfully!');
             localStorage.setItem('token', response.jwt);
             refetch();
         },
@@ -37,12 +38,13 @@ export default function Profile() {
         onError: (e) => {
             toast.error(e.message);
         }
-    })
+    });
 
     const changeEmailMutation = useMutation({
         mutationFn: changeUserEmail,
 
         onSuccess: (response: ProfileDataChangeResponse): void => {
+            toast.success('Email changed successfully!');
             localStorage.setItem('token', response.jwt);
             refetch();
         },
@@ -50,19 +52,20 @@ export default function Profile() {
         onError: (e) => {
             toast.error(e.message);
         }
-    })
+    });
 
     const changePasswordMutation = useMutation({
         mutationFn: changeUserPassword,
 
         onSuccess: (response: ProfileDataChangeResponse): void => {
+            toast.success('Password changed successfully!');
             localStorage.setItem('token', response.jwt);
         },
 
         onError: (e) => {
             toast.error(e.message);
         }
-    })
+    });
 
     if (isError) {
         router.push('/login');
@@ -78,12 +81,12 @@ export default function Profile() {
                 <ActionsNavbar className="h-[75px] md:w-[50%] md:mx-auto mt-6 hidden md:block"/>
                 <Skeleton className="h-[300px] w-full md:w-1/2 md:mx-auto mt-12"/>
             </>
-    )
+        );
     }
 
     return (<div className="flex flex-col h-[100vh] md:h-auto">
             <div className="flex justify-end gap-x-4 mt-4 px-4">
-            <ThemeToggle/>
+                <ThemeToggle/>
                 <NotificationDropdown numberOfNotifications={data?.numberOfNotifications || 0}/>
             </div>
             <ActionsNavbar className="h-[75px] md:w-[50%] md:mx-auto mt-6 hidden md:block"/>
@@ -99,7 +102,8 @@ export default function Profile() {
                             <h1 className="font-bold">Name</h1>
                         </div>
                         <p>{data?.name}</p>
-                        {isEditing && <ProfileSettingsModal type="name" onSubmit={changeNameMutation.mutate} onSuccess={refetch}/>}
+                        {isEditing && <ProfileSettingsModal type="name" onSubmit={changeNameMutation.mutate}
+                                                            onSuccess={refetch}/>}
                     </div>
 
                     <div className="flex gap-x-2 mt-4">
@@ -108,7 +112,8 @@ export default function Profile() {
                             <h1 className="font-bold">Email</h1>
                         </div>
                         <p>{data?.email}</p>
-                        {isEditing && <ProfileSettingsModal type="email" onSubmit={changeEmailMutation.mutate} onSuccess={refetch}/>}
+                        {isEditing && <ProfileSettingsModal type="email" onSubmit={changeEmailMutation.mutate}
+                                                            onSuccess={refetch}/>}
                     </div>
 
                     <div className="flex gap-x-2 mt-4">
@@ -117,7 +122,8 @@ export default function Profile() {
                             <h1 className="font-bold">Password</h1>
                         </div>
                         <p>********</p>
-                        {isEditing && <ProfileSettingsModal type="password" onSubmit={changePasswordMutation.mutate} onSuccess={refetch}/>}
+                        {isEditing && <ProfileSettingsModal type="password" onSubmit={changePasswordMutation.mutate}
+                                                            onSuccess={refetch}/>}
                     </div>
 
                     <div className="flex gap-x-2 mt-4">

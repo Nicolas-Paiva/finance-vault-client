@@ -3,9 +3,14 @@ import {Label} from '@/components/ui/label';
 import {FiEdit2} from 'react-icons/fi';
 import {Input} from '@/components/ui/input';
 import {Button} from '@/components/ui/button';
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {EmailChangeRequest, NameChangeRequest, PasswordChangeRequest} from '@/lib/types/profile';
-import {isEmailValid} from '@/lib/utils/utils';
+import {
+    isEmailValid,
+    isPasswordValid,
+    passwordContainsSpecialCharacter,
+    passwordContainsUppercase
+} from '@/lib/utils/utils';
 import {FaEye, FaEyeSlash} from 'react-icons/fa';
 
 type ProfileSettingsModalProps = {
@@ -33,38 +38,40 @@ export default function ProfileSettingsModal({type, onSubmit}: ProfileSettingsMo
 
     const [buttonInactive, setButtonInactive] = useState(true);
 
-    // Error
+    // Email error
     const [emailError, setEmailError] = useState(false);
     const [confirmationEmailError, setConfirmationEmailError] = useState(false);
+
+    // Password error
+    const [tooShort, setTooShort] = useState(false);
+    const [noSpecialCharacter, setNoSpecialCharacter] = useState(false);
+    const [noUpperCaseLetter, setNoUpperCaseLetter] = useState(false);
+
+    const [passwordError, setPasswordError] = useState('');
+    const [passwordConfirmationError, setPasswordConfirmationError] = useState('');
 
 
     /**
      * Password hidden/unhidden functionality
      */
     function changePasswordInput1(): void {
-        if (inputType1 === 'password') {
-            setInputType1('text');
-        } else {
-            setInputType1('password');
-        }
+        setInputType1((prev: string) => {
+            return prev === 'password' ? 'text' : 'password';
+        });
     }
 
 
     function changePasswordInput2(): void {
-        if (inputType2 === 'password') {
-            setInputType2('text');
-        } else {
-            setInputType2('password');
-        }
+        setInputType2((prev: string) => {
+            return prev === 'password' ? 'text' : 'password';
+        });
     }
 
 
     function changePasswordInput3(): void {
-        if (inputType3 === 'password') {
-            setInputType3('text');
-        } else {
-            setInputType3('password');
-        }
+        setInputType3((prev: string) => {
+            return prev === 'password' ? 'text' : 'password';
+        });
     }
 
 
@@ -93,6 +100,45 @@ export default function ProfileSettingsModal({type, onSubmit}: ProfileSettingsMo
         }
     }, [newEmail, newEmailConfirmation]);
 
+    /**
+     * Displays errors and enables submission for
+     * the password
+     */
+    useEffect(() => {
+
+        if (newPasswordConfirmation === newPassword
+            && oldPassword.length > 0
+            && newPassword.length > 0
+        ) {
+            setButtonInactive(false);
+        }
+
+        if (newPassword.length < 8) {
+            setTooShort(true);
+        } else {
+            setTooShort(false);
+        }
+
+        if (!passwordContainsSpecialCharacter(newPassword)) {
+            setNoSpecialCharacter(true);
+        } else {
+            setNoSpecialCharacter(false);
+        }
+
+        if (!passwordContainsUppercase(newPassword)) {
+            setNoUpperCaseLetter(true);
+        } else {
+            setNoUpperCaseLetter(false);
+        }
+
+        if (newPassword !== newPasswordConfirmation) {
+            setPasswordConfirmationError('Both password must match');
+        } else {
+            setPasswordConfirmationError('');
+        }
+
+    }, [newPassword, newPasswordConfirmation, oldPassword]);
+
 
     /**
      * Checks whether the provided email has a valid format
@@ -109,6 +155,10 @@ export default function ProfileSettingsModal({type, onSubmit}: ProfileSettingsMo
     }
 
 
+    /**
+     * Sets the error in the confirmation email
+     * if it does not match the provided email
+     */
     function confirmationEmailValidation(email: string): void {
         setConfirmationEmail(email);
 
@@ -120,6 +170,9 @@ export default function ProfileSettingsModal({type, onSubmit}: ProfileSettingsMo
     }
 
 
+    /**
+     * Submits the data for change
+     */
     function changeData(): void {
         const nameRequest: NameChangeRequest = {
             newName,
@@ -226,7 +279,20 @@ export default function ProfileSettingsModal({type, onSubmit}: ProfileSettingsMo
                             </span>}
                     </div>
                     {emailError && <p className="text-xs text-destructive">Please provide a valid email</p>}
+
+                    {type === 'password' && <ul>
+                        <li className={`ml-6 list-disc text-xs ${tooShort ? 'text-destructive' : 'text-muted-foreground'}`}>At
+                            least 8 characters
+                        </li>
+                        <li className={`ml-6 list-disc text-xs  ${noSpecialCharacter ? 'text-destructive' : 'text-muted-foreground'}`}>At
+                            least 1 special character
+                        </li>
+                        <li className={`ml-6 list-disc text-xs  ${noUpperCaseLetter ? 'text-destructive' : 'text-muted-foreground'}`}>At
+                            least 1 uppercase letter
+                        </li>
+                    </ul>}
                 </div>
+
 
                 {/* Last name input */}
                 {type === 'name' &&
@@ -262,6 +328,8 @@ export default function ProfileSettingsModal({type, onSubmit}: ProfileSettingsMo
                                 </span>}
                         </div>
                         {confirmationEmailError && <p className="text-xs text-destructive">Both email must match</p>}
+                        {passwordConfirmationError &&
+                            <p className="text-xs text-destructive">{passwordConfirmationError}</p>}
                     </div>
                 }
                 <DialogClose asChild>

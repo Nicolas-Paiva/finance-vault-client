@@ -4,7 +4,7 @@ import {Card} from '@/components/ui/card';
 import {Label} from '@/components/ui/label';
 import {Input} from '@/components/ui/input';
 import {Button} from '@/components/ui/button';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     isEmailValid,
     isPasswordValid,
@@ -22,6 +22,7 @@ import {useMutation} from '@tanstack/react-query';
 import Link from 'next/link';
 import {Loader2Icon} from 'lucide-react';
 import {useRouter} from 'next/navigation';
+import {FaEye, FaEyeSlash} from 'react-icons/fa';
 
 
 export default function SignUp() {
@@ -47,7 +48,19 @@ export default function SignUp() {
     const [noSpecialCharacter, setNoSpecialCharacter] = useState(false);
     const [noUpperCaseLetter, setNoUpperCaseLetter] = useState(false);
 
+    // Controls the password input type
+    const [passwordInputType, setPasswordInputType] = useState('password');
+
+
+    function togglePasswordVisibility(): void {
+        setPasswordInputType(prev => {
+            return prev === 'password' ? 'text' : 'password';
+        });
+    }
+
+
     const router = useRouter();
+
 
     /**
      * Checks form data. Returns true only if all
@@ -178,33 +191,42 @@ export default function SignUp() {
 
 
                         <Label htmlFor="password" className="ml-2 mb-1 mt-4">Password</Label>
-                        <Input type="password"
-                               id="password"
-                               value={password}
-                               placeholder="Password"
-                               onChange={(e) => {
-                                   setPassword(e.target.value);
+                        <div className="relative">
+                            <Input type={passwordInputType}
+                                   id="password"
+                                   value={password}
+                                   placeholder="Password"
+                                   onChange={(e) => {
+                                       setPassword(e.target.value);
 
-                                   if (e.target.value.length >= 8) {
-                                       setTooShort(false);
-                                   } else {
-                                       setTooShort(true);
-                                   }
+                                       if (e.target.value.length >= 8) {
+                                           setTooShort(false);
+                                       } else {
+                                           setTooShort(true);
+                                       }
 
-                                   if (passwordContainsSpecialCharacter(e.target.value)) {
-                                       setNoSpecialCharacter(false);
-                                   } else {
-                                       setNoSpecialCharacter(true);
-                                   }
+                                       if (passwordContainsSpecialCharacter(e.target.value)) {
+                                           setNoSpecialCharacter(false);
+                                       } else {
+                                           setNoSpecialCharacter(true);
+                                       }
 
-                                   if (passwordContainsUppercase(e.target.value)) {
-                                       setNoUpperCaseLetter(false);
-                                   } else {
-                                       setNoUpperCaseLetter(true);
-                                   }
-                               }}
-                               onClick={() => setPasswordError(false)}
-                        />
+                                       if (passwordContainsUppercase(e.target.value)) {
+                                           setNoUpperCaseLetter(false);
+                                       } else {
+                                           setNoUpperCaseLetter(true);
+                                       }
+                                   }}
+                                   onClick={() => setPasswordError(false)}
+                            />
+                            <span className="absolute top-[10] right-4" onClick={togglePasswordVisibility}>
+                                {passwordInputType === 'password' ?
+                                    <FaEye/>
+                                    :
+                                    <FaEyeSlash/>
+                                }
+                            </span>
+                        </div>
                         {passwordError &&
                             <p className="ml-2 text-xs text-destructive">Please provide a valid password</p>}
                         <ul>

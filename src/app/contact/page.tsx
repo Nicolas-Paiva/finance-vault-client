@@ -37,6 +37,10 @@ export default function Contact() {
     const [notChecked, setNotChecked] = useState(false);
 
 
+    /**
+     * Checks the form submission for errors before
+     * submitting
+     */
     function checkSubmission(): void {
         let isDataValid = true;
 
