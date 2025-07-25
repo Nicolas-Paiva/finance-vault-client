@@ -241,7 +241,7 @@ export default function ProfileSettingsModal({type, onSubmit}: ProfileSettingsMo
                         <div className="relative">
                             <Input type={inputType1} id="old-password" onChange={(e) =>
                                 setOldPassword(e.target.value)}/>
-                            <span className="absolute top-[10] right-4" onClick={changePasswordInput1}>
+                            <span className="absolute top-[10] right-4 hover:cursor-pointer" onClick={changePasswordInput1}>
                                 {inputType1 === 'password' ?
                                     <FaEye/>
                                     :
@@ -270,7 +270,7 @@ export default function ProfileSettingsModal({type, onSubmit}: ProfileSettingsMo
                             }
                         }}/>
                         {type === 'password' &&
-                            <span className="absolute top-[10] right-4" onClick={changePasswordInput2}>
+                            <span className="absolute top-[10] right-4 hover:cursor-pointer" onClick={changePasswordInput2}>
                                 {inputType2 === 'password' ?
                                     <FaEye/>
                                     :
@@ -319,7 +319,7 @@ export default function ProfileSettingsModal({type, onSubmit}: ProfileSettingsMo
                                 }
                             }}/>
                             {type === 'password' &&
-                                <span className="absolute top-[10] right-4" onClick={changePasswordInput3}>
+                                <span className="absolute top-[10] right-4 hover:cursor-pointer" onClick={changePasswordInput3}>
                                     {inputType3 === 'password' ?
                                         <FaEye/>
                                         :

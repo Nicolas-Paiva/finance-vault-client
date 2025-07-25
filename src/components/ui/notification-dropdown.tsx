@@ -70,7 +70,7 @@ export default function NotificationDropdown({numberOfNotifications}: Notificati
                     </span>
                 </div>
             </DropdownMenuTrigger>
-            <DropdownMenuContent side="bottom" align="end" className="w-[80vw] md:w-[40vw] mt-2 md:mt-0">
+            <DropdownMenuContent side="bottom" align="end" className="w-[75vw] md:w-[40vw] mt-2 md:mt-0">
                 <DropdownMenuLabel>Notifications</DropdownMenuLabel>
                 <DropdownMenuSeparator/>
                 <ScrollArea className="h-[150px]">

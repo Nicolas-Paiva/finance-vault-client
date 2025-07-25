@@ -219,7 +219,7 @@ export default function SignUp() {
                                    }}
                                    onClick={() => setPasswordError(false)}
                             />
-                            <span className="absolute top-[10] right-4" onClick={togglePasswordVisibility}>
+                            <span className="absolute top-[10] right-4 hover:cursor-pointer" onClick={togglePasswordVisibility}>
                                 {passwordInputType === 'password' ?
                                     <FaEye/>
                                     :

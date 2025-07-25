@@ -6,7 +6,7 @@ type TransactionProps = TransactionView & {
     currency: string
 }
 
-export default function Transaction({id, amount, createdAt, senderName, receiverName, currency}: TransactionProps) {
+export default function Transaction({id, amount, createdAt, senderName, receiverName, senderEmail, receiverEmail ,currency}: TransactionProps) {
 
 
     return <div className="flex items-center mb-3">
@@ -15,6 +15,7 @@ export default function Transaction({id, amount, createdAt, senderName, receiver
             <div className="flex flex-col">
                 {/* One will be undefined */}
                 <p>{senderName || receiverName}</p>
+                <span className="text-xs text-slate-500 mb-[1px]">{senderEmail || receiverEmail}</span>
                 <span className="text-xs text-slate-500">{formatter.format(new Date(createdAt))}</span>
             </div>
             <p className="font-bold">{formatCurrency(amount, currency)}</p>

@@ -8,6 +8,7 @@ import {ThemeToggle} from '@/components/ui/theme-toggle';
 import ActionsNavbar from '@/components/ui/home-actions-navbar';
 import BalanceContainer from '@/components/ui/balance-container';
 import {useRouter} from 'next/navigation';
+import SignOut from '@/components/ui/sign-out';
 
 /**
  * Represents the home page, displaying relevant user data.
@@ -41,10 +42,11 @@ export default function Home() {
     return (
         <div className="flex flex-col h-[100vh] md:h-auto">
             <div className="flex items-center justify-between mt-4 px-4">
-                <h1 className="text-lg md:text-2xl">Hello, {data?.name}!</h1>
-                <div className="flex gap-x-4">
+                <h1 className="text-md md:text-2xl">Hello, {data?.name}!</h1>
+                <div className="flex items-center gap-x-1 md:gap-x-4">
                     <ThemeToggle/>
                     <NotificationDropdown numberOfNotifications={data?.numberOfNotifications || 0}/>
+                    <SignOut/>
                 </div>
             </div>
             {data && <BalanceContainer balance={data.balance} currency={data.currency}/>}
