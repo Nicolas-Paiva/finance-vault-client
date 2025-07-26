@@ -1,6 +1,6 @@
 import customFetch from '@/lib/axios/customAxios';
 import {redirect} from 'next/navigation';
-import {TransactionView} from '@/lib/types/transaction-types';
+import {AxiosError} from 'axios';
 
 export type SummaryResponse = {
     name: string;
@@ -20,15 +20,16 @@ export type WeeklyTransactions = {
 
 // Returns the user's summary
 export async function getSummary(): Promise<SummaryResponse> {
-    let response;
     try {
-        response = await customFetch.get('/summary');
+        const response = await customFetch.get('/summary');
         return response.data;
-    } catch (error: any) {
-        if (error.response?.status === 401) {
+    } catch (error) {
+        const err = error as AxiosError;
+
+        if (err.response?.status === 401) {
             redirect('/login');
         }
-        throw error;
+        throw err;
     }
 }
 

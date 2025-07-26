@@ -36,7 +36,7 @@ export default function About() {
                     </div>
                 </ScrollArea>
                 <p className="text-center mx-auto mt-8 p-4
-                 border-2 border-accent rounded">Whether you're budgeting for the month,
+                 border-2 border-accent rounded">Whether you&#39;re budgeting for the month,
                     keeping an eye on spending, or just curious about your financial habits,
                     Finance Vault is your personal, secure vault for everything finance-related.</p>
             </section>

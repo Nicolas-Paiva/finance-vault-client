@@ -6,7 +6,7 @@ type TransactionProps = TransactionView & {
     currency: string
 }
 
-export default function Transaction({id, amount, createdAt, senderName, receiverName, senderEmail, receiverEmail ,currency}: TransactionProps) {
+export default function Transaction({amount, createdAt, senderName, receiverName, senderEmail, receiverEmail ,currency}: TransactionProps) {
 
 
     return <div className="flex items-center mb-3">

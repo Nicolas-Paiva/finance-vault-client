@@ -46,7 +46,7 @@ export default function ProfileSettingsModal({type, onSubmit}: ProfileSettingsMo
     const [noSpecialCharacter, setNoSpecialCharacter] = useState(false);
     const [noUpperCaseLetter, setNoUpperCaseLetter] = useState(false);
 
-    const [passwordError, setPasswordError] = useState('');
+    // const [passwordError, setPasswordError] = useState('');
     const [passwordConfirmationError, setPasswordConfirmationError] = useState('');
 
 

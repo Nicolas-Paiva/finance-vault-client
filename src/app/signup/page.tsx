@@ -4,7 +4,7 @@ import {Card} from '@/components/ui/card';
 import {Label} from '@/components/ui/label';
 import {Input} from '@/components/ui/input';
 import {Button} from '@/components/ui/button';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
     isEmailValid,
     isPasswordValid,

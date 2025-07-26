@@ -1,6 +1,3 @@
-// @ts-ignore
-// @ts-ignore
-
 import {LineChart, Line, XAxis, YAxis, Legend, ResponsiveContainer, Tooltip} from 'recharts';
 import {formatter} from '@/lib/utils/utils';
 import {Card} from '@/components/ui/card';
