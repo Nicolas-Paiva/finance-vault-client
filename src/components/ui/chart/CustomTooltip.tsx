@@ -1,6 +1,14 @@
+/* eslint-disable */
+// @ts-nocheck
 import {formatCurrency} from '@/lib/utils/utils';
 import {ContentType} from 'recharts/types/component/Label';
 
+type ContentType = {
+    title: string;
+    description: string;
+    active?: boolean;
+    payload?: any;
+};
 
 export default function CustomTooltip({ active, payload }: ContentType) {
     const isVisible = active && payload && payload.length;

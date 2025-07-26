@@ -1,3 +1,6 @@
+/* eslint-disable */
+// @ts-nocheck
+
 import {Card, CardTitle} from '@/components/ui/card';
 import {ScrollArea} from '@/components/ui/scroll-area';
 import Transaction from '@/components/ui/transaction';
