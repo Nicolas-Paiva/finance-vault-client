@@ -1,3 +1,6 @@
+// @ts-ignore
+// @ts-ignore
+
 import {LineChart, Line, XAxis, YAxis, Legend, ResponsiveContainer, Tooltip} from 'recharts';
 import {formatter} from '@/lib/utils/utils';
 import {Card} from '@/components/ui/card';
@@ -8,6 +11,7 @@ export type LineChartProps = {
     weeklyTransactions: WeeklyTransactions
 }
 
+
 export default function DashboardLineChart({weeklyTransactions}: LineChartProps) {
 
     // Converting the API response to rechart format
@@ -17,6 +21,7 @@ export default function DashboardLineChart({weeklyTransactions}: LineChartProps)
             total: total
         }
     })
+
 
     return (
         <Card className="h-full w-full">

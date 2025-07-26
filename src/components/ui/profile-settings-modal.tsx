@@ -7,7 +7,6 @@ import React, {useEffect, useState} from 'react';
 import {EmailChangeRequest, NameChangeRequest, PasswordChangeRequest} from '@/lib/types/profile';
 import {
     isEmailValid,
-    isPasswordValid,
     passwordContainsSpecialCharacter,
     passwordContainsUppercase
 } from '@/lib/utils/utils';

@@ -5,7 +5,6 @@ import {
 } from '@/components/ui/dropdown-menu';
 import {CiSettings} from 'react-icons/ci';
 import React from 'react';
-import {Button} from '@/components/ui/button';
 import ProfileSettingsModal from '@/components/ui/profile-settings-modal';
 
 export default function SettingsDropdown() {

@@ -13,11 +13,14 @@ import DashboardLineChart from '@/components/ui/chart/dashboard-line-chart';
 import {useQuery} from '@tanstack/react-query';
 import {getMonthWeeklyTotals} from '@/lib/services/summary-service';
 import {Skeleton} from '@/components/ui/skeleton';
+import SignOut from '@/components/ui/sign-out';
 
 export default function Dashboard() {
     const {data, isPending, isError} = useSummary();
 
-    const {data: totals, isPending: isChartDataPending, isError: isChartDataError} = useQuery({
+    // TODO: Add isChartDataPending and isChartDataError
+
+    const {data: totals} = useQuery({
         queryKey: ['weeklyTotals'],
 
         queryFn: getMonthWeeklyTotals
@@ -46,11 +49,11 @@ export default function Dashboard() {
 
     return (
         <div className="flex flex-col h-[100vh]">
-            <div className="flex items-center justify-between mt-4 px-4">
-                <h1 className="text-lg md:text-2xl">Hello, {data?.name}!</h1>
+            <div className="flex items-center justify-end mt-4 px-4">
                 <div className="flex gap-x-4">
                     <ThemeToggle/>
                     <NotificationDropdown numberOfNotifications={data?.numberOfNotifications || 0}/>
+                    <SignOut/>
                 </div>
             </div>
             {data && <BalanceContainer balance={data.balance} currency={data.currency}/>}

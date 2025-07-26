@@ -1,6 +1,7 @@
 import {formatCurrency} from '@/lib/utils/utils';
 import {ContentType} from 'recharts/types/component/Label';
 
+
 export default function CustomTooltip({ active, payload }: ContentType) {
     const isVisible = active && payload && payload.length;
 

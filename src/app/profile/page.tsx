@@ -18,6 +18,7 @@ import {changeUserEmail, changeUserName, changeUserPassword} from '@/lib/service
 import {ProfileDataChangeResponse} from '@/lib/types/profile';
 import {toast} from 'sonner';
 import {Skeleton} from '@/components/ui/skeleton';
+import SignOut from '@/components/ui/sign-out';
 
 export default function Profile() {
     const {data, isPending, isError, refetch} = useSummary();
@@ -76,7 +77,7 @@ export default function Profile() {
             <>
                 <div className="flex justify-end gap-x-4 mt-4 px-4">
                     <ThemeToggle/>
-                    <NotificationDropdown numberOfNotifications={data?.numberOfNotifications || 0}/>
+                    {data && <NotificationDropdown numberOfNotifications={data.numberOfNotifications || 0}/>}
                 </div>
                 <ActionsNavbar className="h-[75px] md:w-[50%] md:mx-auto mt-6 hidden md:block"/>
                 <Skeleton className="h-[300px] w-full md:w-1/2 md:mx-auto mt-12"/>
@@ -88,6 +89,7 @@ export default function Profile() {
             <div className="flex justify-end gap-x-4 mt-4 px-4">
                 <ThemeToggle/>
                 <NotificationDropdown numberOfNotifications={data?.numberOfNotifications || 0}/>
+                <SignOut/>
             </div>
             <ActionsNavbar className="h-[75px] md:w-[50%] md:mx-auto mt-6 hidden md:block"/>
             <Card className="md:w-[50%] md:mx-auto mt-16 pb-12 pt-6">

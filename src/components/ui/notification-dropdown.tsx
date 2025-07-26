@@ -20,8 +20,6 @@ export default function NotificationDropdown({numberOfNotifications}: Notificati
 
     const {
         data: notifications = [],
-        isPending,
-        isError,
         refetch: fetchNotifications
     } = useQuery({
         queryKey: ['notifications'],

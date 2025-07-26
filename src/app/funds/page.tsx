@@ -13,6 +13,7 @@ import BalanceContainer from '@/components/ui/balance-container';
 import {useMutation} from '@tanstack/react-query';
 import {addFunds} from '@/lib/services/funds-service';
 import {toast} from 'sonner';
+import SignOut from '@/components/ui/sign-out';
 
 export default function Funds() {
     const {data, isPending, isError, refetch} = useSummary();
@@ -52,6 +53,7 @@ export default function Funds() {
             <div className="flex justify-end gap-x-4 mt-4 px-4">
                 <ThemeToggle/>
                 <NotificationDropdown numberOfNotifications={data.numberOfNotifications || 0}/>
+                <SignOut/>
             </div>
             <BalanceContainer balance={data?.balance} currency={data?.currency}/>
             <ActionsNavbar className="h-[75px] md:w-[50%] md:mx-auto mt-6 hidden md:block"/>

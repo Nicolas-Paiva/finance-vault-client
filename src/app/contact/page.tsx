@@ -175,7 +175,7 @@ export default function Contact() {
                             <Dialog>
                                 <div className="flex">
                                     <DialogTrigger>
-                                        <Label htmlFor="privacy-policy" className="pb-1 underline">By selecting this, you agree to our privacy
+                                        <Label htmlFor="privacy-policy" className="pb-1 underline hover:cursor-pointer">By selecting this, you agree to our privacy
                                             policy
                                         </Label>
                                     </DialogTrigger>
