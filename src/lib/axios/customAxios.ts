@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 
-const API_BASE_URL = 'https://finance-vault-2.onrender.com';
+const API_BASE_URL = 'https://finance-vault-2.onrender.com/api';
 const PUBLIC_ROUTES: string[] = ['/auth'];
 
 
