@@ -85,7 +85,7 @@ export default function TransactionContainer({currency}: TransactionContainerPro
 
     const transactions: TransactionView[] | undefined = data?.pages.flatMap(page => page.content);
 
-    return <Card className="md:w-[50%] md:mx-auto mt-6 py-2 h-full md:h-[30vh] mb-4">
+    return <Card className="md:w-[50%] md:mx-auto mt-6 py-2 h-[80%] md:h-[40vh] mb-4">
         <div className="flex items-center justify-between w-[90%] mx-auto">
             <p className="font-bold">Transactions</p>
             <div className="flex gap-x-4 mr-2">

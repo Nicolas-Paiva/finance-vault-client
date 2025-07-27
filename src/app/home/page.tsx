@@ -50,9 +50,9 @@ export default function Home() {
                 </div>
             </div>
             {data && <BalanceContainer balance={data.balance} currency={data.currency}/>}
-            <ActionsNavbar className="h-[75px] md:w-[50%] md:mx-auto mt-6 hidden md:block"/>
+            <ActionsNavbar className="h-[75px] md:w-[50%] md:mx-auto mt-6"/>
             {data?.currency && <TransactionContainer currency={data.currency}/>}
-            <ActionsNavbar className="h-[75px] md:w-[50%] md:mx-auto mt-auto mb-2 md:hidden"/>
+            {/*<ActionsNavbar className="h-[75px] md:w-[50%] md:mx-auto mt-auto mb-2 md:hidden"/>*/}
         </div>
     );
 };

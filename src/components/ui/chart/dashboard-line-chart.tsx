@@ -25,7 +25,7 @@ export default function DashboardLineChart({weeklyTransactions}: LineChartProps)
 
 
     return (
-        <Card className="h-full w-full">
+        <Card className="h-[85%] md:h-full m w-full">
         <ResponsiveContainer width="100%" height="100%">
             <LineChart
                 width={500}

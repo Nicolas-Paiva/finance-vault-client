@@ -22,6 +22,7 @@ import {ProfileDataChangeResponse} from '@/lib/types/profile';
 import {toast} from 'sonner';
 import {Skeleton} from '@/components/ui/skeleton';
 import SignOut from '@/components/ui/sign-out';
+import BalanceContainer from '@/components/ui/balance-container';
 
 export default function Profile() {
     const {data, isPending, isError, refetch} = useSummary();
@@ -93,7 +94,8 @@ export default function Profile() {
                 <NotificationDropdown numberOfNotifications={data?.numberOfNotifications || 0}/>
                 <SignOut/>
             </div>
-            <ActionsNavbar className="h-[75px] md:w-[50%] md:mx-auto mt-6 hidden md:block"/>
+            {data && <BalanceContainer balance={data.balance} currency={data.currency}/>}
+            <ActionsNavbar className="h-[75px] md:w-[50%] md:mx-auto mt-6 md:block"/>
             <Card className="md:w-[50%] md:mx-auto mt-16 pb-12 pt-6">
                 <CardHeader className="flex justify-between">
                     <CardTitle className="text-center">Profile</CardTitle>
@@ -139,7 +141,7 @@ export default function Profile() {
                     </div>
                 </CardContent>
             </Card>
-            <ActionsNavbar className="h-[75px] md:w-[50%] md:mx-auto mt-auto mb-2 md:hidden"/>
+            {/*<ActionsNavbar className="h-[75px] md:w-[50%] md:mx-auto mt-auto mb-2 md:hidden"/>*/}
         </div>
     );
 };

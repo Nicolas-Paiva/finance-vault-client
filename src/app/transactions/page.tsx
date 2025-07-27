@@ -81,7 +81,7 @@ export default function TransactionsPage() {
             <NotificationDropdown numberOfNotifications={data?.numberOfNotifications || 0}/>
         </div>
         {data && <BalanceContainer balance={data?.balance} currency={data?.currency}/>}
-        <ActionsNavbar className="h-[75px] md:w-[50%] md:mx-auto mt-6 hidden md:block"/>
+        <ActionsNavbar className="h-[75px] md:w-[50%] md:mx-auto mt-6 md:block"/>
         {transactionError && <Card className="h-[10px] w-full md:w-1/2 md:mx-auto mt-6 flex justify-center bg-destructive border-none">
             <div className="flex items-center gap-x-2 pl-2 text-white">
                 <MdErrorOutline size={20} />
@@ -117,6 +117,6 @@ export default function TransactionsPage() {
                     Send</Button>
             </div>
         </Card>
-        <ActionsNavbar className="h-[75px] md:w-[50%] md:mx-auto mt-auto mb-2 md:hidden"/>
+        {/*<ActionsNavbar className="h-[75px] md:w-[50%] md:mx-auto mt-auto mb-2 md:hidden"/>*/}
     </div>;
 };

@@ -57,7 +57,7 @@ export default function Dashboard() {
                 </div>
             </div>
             {data && <BalanceContainer balance={data.balance} currency={data.currency}/>}
-            <ActionsNavbar className="h-[75px] md:w-[50%] md:mx-auto mt-6 hidden md:block"/>
+            <ActionsNavbar className="h-[75px] md:w-[50%] md:mx-auto mt-6 md:block"/>
             <section className="w-full md:w-1/2 flex justify-between gap-y-4 mx-auto mt-6">
                 <Card className="w-[48%]">
                     <CardTitle className="text-center">Withdrawals</CardTitle>
@@ -75,7 +75,7 @@ export default function Dashboard() {
                 {totals &&
                     <DashboardLineChart weeklyTransactions={totals}/>}
             </div>
-            <ActionsNavbar className="h-[75px] md:w-[50%] md:mx-auto mt-auto mb-2 md:hidden"/>
+            {/*<ActionsNavbar className="h-[75px] md:w-[50%] md:mx-auto mt-auto mb-2 md:hidden"/>*/}
         </div>
     );
 };
