@@ -2,8 +2,11 @@ import Navbar from '@/components/ui/navbar';
 import {Button} from '@/components/ui/button';
 import Image from 'next/image';
 import Link from 'next/link';
+import {initialise} from '@/lib/services/initialise-service';
 
 export default function Home() {
+    initialise();
+
     return (
         <>
             <Navbar/>
