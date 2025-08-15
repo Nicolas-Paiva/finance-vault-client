@@ -1,21 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Finance Vault Client
 
-## Getting Started
+This is the frontend for the Finance Vault project – a personal finance management tool where users can track expenses, monitor transactions, view summaries with charts, and manage their profile.
+Built with React, styled using shadcn/ui, and optimized with React Query for smooth data fetching and caching.
 
-First, run the development server:
+### 🚀 Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+React – SPA framework for a dynamic UI
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+TypeScript – Strong typing for maintainability
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+React Router DOM – Client-side routing
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+React Query – Efficient data fetching and caching
+
+Axios – HTTP client for API requests
+
+shadcn/ui – Pre-built accessible UI components
+
+Recharts – For data visualization and analytics charts
+
+Vite – Lightning-fast development build tool
+
+### ✨ Features
+
+Authentication & Authorization
+
+JWT-based auth via backend API
+
+Persistent login using browser storage
+
+Transaction Management
+
+View paginated transaction lists
+
+Filtering and sorting options
+
+Integration with expense summaries
+
+Dashboard with Charts
+
+Visualize expenses and balances using Recharts
+
+Summaries of spending and income trends
+
+Profile Management
+
+Update user information directly from the app
+
+Optimized API Requests
+
+Caching and background refetch with React Query
+
+Loading and error states for better UX
+
+Responsive Design
+
+Mobile-friendly layout using shadcn/ui components
