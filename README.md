@@ -5,7 +5,7 @@ Built with React, styled using shadcn/ui, and optimized with React Query for smo
 
 ### 🚀 Tech Stack
 
-React – SPA framework for a dynamic UI
+Next.js and React – SPA framework for a dynamic UI
 
 TypeScript – Strong typing for maintainability
 
@@ -18,8 +18,6 @@ Axios – HTTP client for API requests
 shadcn/ui – Pre-built accessible UI components
 
 Recharts – For data visualization and analytics charts
-
-Vite – Lightning-fast development build tool
 
 ### ✨ Features
 
