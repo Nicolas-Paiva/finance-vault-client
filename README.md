@@ -1,7 +1,7 @@
 ## Finance Vault Client
 
 This is the frontend for the Finance Vault project – a personal finance management tool where users can track expenses, monitor transactions, view summaries with charts, and manage their profile.
-Built with React, styled using shadcn/ui, and optimized with React Query for smooth data fetching and caching.
+Built with React/Next.js, styled using shadcn/ui, and optimized with React Query for smooth data fetching and caching.
 
 ### 🚀 Tech Stack
 
